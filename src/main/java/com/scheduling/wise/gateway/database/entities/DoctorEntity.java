@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.ZonedDateTime;
 
@@ -25,13 +27,15 @@ public class DoctorEntity {
     @Column(name = "user_id", nullable = false)
     private UserEntity userEntityId;
 
-    @Column(nullable = false)
+    @Column(name = "phone_id", nullable = false)
     private PhoneEntity phone;
 
-    @Column(nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "special", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private Specialty specialty;
 
     @Column(nullable = false)

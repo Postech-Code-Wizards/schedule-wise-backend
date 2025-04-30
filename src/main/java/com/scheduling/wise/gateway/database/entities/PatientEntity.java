@@ -7,7 +7,9 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "patients")
@@ -30,8 +32,11 @@ public class PatientEntity {
     @Column(name = "phone_id", nullable = false)
     private PhoneEntity phoneId;
 
+    @Column(name = "has_allergies", nullable = false)
+    private Boolean hasAllergies = false;
+
     @Column(name = "date_of_birth", nullable = false)
-    private ZonedDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

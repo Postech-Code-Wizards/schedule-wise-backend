@@ -6,12 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "phones")
+@Table(name = "phone")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,13 +26,15 @@ public class PhoneEntity {
     @Column(name = "area_code", nullable = false, length = 3)
     private String ddd;
 
-    @Column(name = "phone_number", nullable = false, length = 55)
+    @Column(name = "phone_number", nullable = false, length = 50)
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "phone_type", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private PhoneType phoneType;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "operator", nullable = false, length = 50)
     private String operator;
 
     @CreationTimestamp
