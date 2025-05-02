@@ -1,38 +1,33 @@
 package com.scheduling.wise.gateway.database.entities;
 
-import com.scheduling.wise.domain.enums.Specialty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "doctors")
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DoctorEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private UserEntity userEntityId;
+    private Long userId;
 
     @Column(nullable = false)
-    private PhoneEntity phone;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private Specialty specialty;
+    private String specialty;
 
     @Column(nullable = false)
     private String crm;
@@ -44,4 +39,11 @@ public class DoctorEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "phone_id")
+    private PhoneEntity phone;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<ConsultationEntity> consultations;
 }
