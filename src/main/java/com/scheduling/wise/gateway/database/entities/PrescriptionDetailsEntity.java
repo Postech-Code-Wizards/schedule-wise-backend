@@ -26,13 +26,13 @@ public class PrescriptionDetailsEntity {
     @JoinColumn(name = "diagnostic_id", nullable = false)
     private DiagnosticsEntity diagnostic;
 
-    @Column(name = "medication_name", nullable = false, length = 255)
+    @Column(name = "medication_name", nullable = false)
     private String medicationName;
 
     @Column(name = "dosage", nullable = false)
     private String dosage;
 
-    @Column(name = "frequency", nullable = false, length = 255)
+    @Column(name = "frequency", nullable = false)
     private String frequency;
 
     @Column(name = "route_of_administration", nullable = false)
