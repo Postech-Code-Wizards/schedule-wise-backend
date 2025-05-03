@@ -1,4 +1,4 @@
-CREATE TYPE status AS ENUM ("SCHEDULED","ACCOMPLISHED", "CANCELLED", "RESCHEDULED");
+CREATE TYPE status AS ENUM ('SCHEDULED','ACCOMPLISHED', 'CANCELLED', 'RESCHEDULED');
 
 CREATE TABLE "consultation" (
     id BIGSERIAL PRIMARY KEY,
@@ -34,32 +34,32 @@ CREATE TABLE "diagnostic" (
 
 );
 
-CREATE TYPE specialty AS ENUM ("    ALLERGY_AND_IMMUNOLOGY",
-                                    "ANESTHESIOLOGY",
-                                    "CARDIOLOGY",
-                                    "DERMATOLOGY",
-                                    "EMERGENCY_MEDICINE",
-                                    "ENDOCRINOLOGY",
-                                    "FAMILY_MEDICINE",
-                                    "GASTROENTEROLOGY",
-                                    "GENERAL_SURGERY",
-                                    "GERIATRICS",
-                                    "HEMATOLOGY",
-                                    "INFECTIOUS_DISEASES",
-                                    "INTERNAL_MEDICINE",
-                                    "NEPHROLOGY",
-                                    "NEUROLOGY",
-                                    "OBSTETRICS_AND_GYNECOLOGY",
-                                    "ONCOLOGY",
-                                    "OPHTHALMOLOGY",
-                                    "ORTHOPEDICS",
-                                    "OTOLARYNGOLOGY",
-                                    "PEDIATRICS",
-                                    "PLASTIC_SURGERY",
-                                    "PSYCHIATRY",
-                                    "PULMONOLOGY",
-                                    "RHEUMATOLOGY",
-                                    "UROLOGY");
+CREATE TYPE specialty AS ENUM ('    ALLERGY_AND_IMMUNOLOGY',
+                                    'ANESTHESIOLOGY',
+                                    'CARDIOLOGY',
+                                    'DERMATOLOGY',
+                                    'EMERGENCY_MEDICINE',
+                                    'ENDOCRINOLOGY',
+                                    'FAMILY_MEDICINE',
+                                    'GASTROENTEROLOGY',
+                                    'GENERAL_SURGERY',
+                                    'GERIATRICS',
+                                    'HEMATOLOGY',
+                                    'INFECTIOUS_DISEASES',
+                                    'INTERNAL_MEDICINE',
+                                    'NEPHROLOGY',
+                                    'NEUROLOGY',
+                                    'OBSTETRICS_AND_GYNECOLOGY',
+                                    'ONCOLOGY',
+                                    'OPHTHALMOLOGY',
+                                    'ORTHOPEDICS',
+                                    'OTOLARYNGOLOGY',
+                                    'PEDIATRICS',
+                                    'PLASTIC_SURGERY',
+                                    'PSYCHIATRY',
+                                    'PULMONOLOGY',
+                                    'RHEUMATOLOGY',
+                                    'UROLOGY');
 
 CREATE TABLE "doctor" (
     id BIGSERIAL PRIMARY KEY,
@@ -73,22 +73,22 @@ CREATE TABLE "doctor" (
     CONSTRAINT fk_phone FOREIGN KEY (phone_id) REFERENCES "phone" (id)
 );
 
-CREATE TYPE relationship_type AS ENUM ("    BROTHER",
-                                            "CHILD",
-                                            "FATHER",
-                                            "FRIEND",
-                                            "GRANDFATHER",
-                                            "GRANDMOTHER",
-                                            "MOTHER",
-                                            "PARTNER",
-                                            "SISTER",
-                                            "SPOUSE",
-                                            "UNCLE",
-                                            "AUNT",
-                                            "COUSIN",
-                                            "GUARDIAN",
-                                            "NEIGHBOR",
-                                            "OTHER");
+CREATE TYPE relationship_type AS ENUM ('    BROTHER',
+                                            'CHILD',
+                                            'FATHER',
+                                            'FRIEND',
+                                            'GRANDFATHER',
+                                            'GRANDMOTHER',
+                                            'MOTHER',
+                                            'PARTNER',
+                                            'SISTER',
+                                            'SPOUSE',
+                                            'UNCLE',
+                                            'AUNT',
+                                            'COUSIN',
+                                            'GUARDIAN',
+                                            'NEIGHBOR',
+                                            'OTHER');
 
 CREATE TABLE "emergency_contact" (
     id BIGSERIAL PRIMARY KEY,
@@ -104,26 +104,26 @@ CREATE TABLE "emergency_contact" (
 
 );
 
-CREATE TYPE area_of_work AS ENUM ("     ANESTHESIA",
-                                        "CARDIAC",
-                                        "COMMUNITY_HEALTH",
-                                        "CRITICAL_CARE",
+CREATE TYPE area_of_work AS ENUM ('     ANESTHESIA',
+                                        'CARDIAC',
+                                        'COMMUNITY_HEALTH',
+                                        'CRITICAL_CARE',
                                         'DIALYSIS',
-                                        "EMERGENCY",
-                                        "GERIATRIC",
-                                        "HOSPICE_AND_PALLIATIVE_CARE",
-                                        "HOME_HEALTH",
-                                        "INFECTIOUS_DISEASES",
-                                        "NEONATAL",
-                                        "OCCUPATIONAL_HEALTH",
-                                        "ONCOLOGY",
-                                        "PEDIATRIC",
-                                        "PSYCHIATRIC",
-                                        "PUBLIC_HEALTH",
-                                        "REHABILITATION",
-                                        "SCHOOL_NURSING",
-                                        "SURGICAL",
-                                        "TELEHEALTH");
+                                        'EMERGENCY',
+                                        'GERIATRIC',
+                                        'HOSPICE_AND_PALLIATIVE_CARE',
+                                        'HOME_HEALTH',
+                                        'INFECTIOUS_DISEASES',
+                                        'NEONATAL',
+                                        'OCCUPATIONAL_HEALTH',
+                                        'ONCOLOGY',
+                                        'PEDIATRIC',
+                                        'PSYCHIATRIC',
+                                        'PUBLIC_HEALTH',
+                                        'REHABILITATION',
+                                        'SCHOOL_NURSING',
+                                        'SURGICAL',
+                                        'TELEHEALTH');
 
 CREATE TABLE "nurse" (
     id BIGSERIAL PRIMARY KEY,
@@ -149,7 +149,7 @@ CREATE TABLE "patient" (
     CONSTRAINT fk_phone FOREIGN KEY (phone_id) REFERENCES "phone" (id)
 );
 
-CREATE TYPE phone_type AS ENUM (" CELL_PHONE", "TELEPHONE", "BUSINESS_PHONE");
+CREATE TYPE phone_type AS ENUM (' CELL_PHONE', 'TELEPHONE', 'BUSINESS_PHONE');
 
 CREATE TABLE "phone" (
     id BIGSERIAL PRIMARY KEY,

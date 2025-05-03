@@ -24,7 +24,7 @@ public class PrescriptionDetailsEntity {
 
     @ManyToOne
     @JoinColumn(name = "diagnostic_id", nullable = false)
-    private DiagnosticEntity diagnosticId;
+    private DiagnosticEntity diagnostic;
 
     @Column(name = "medication_name", nullable = false)
     private String medicationName;

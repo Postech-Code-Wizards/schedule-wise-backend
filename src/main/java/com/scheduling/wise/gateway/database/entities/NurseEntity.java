@@ -1,5 +1,6 @@
 package com.scheduling.wise.gateway.database.entities;
 
+import com.scheduling.wise.domain.enums.AreaOfWork;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class NurseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "area_of_work", nullable = false)
     @JdbcType(PostgreSQLEnumJdbcType.class)
-    private String areaOfWork;
+    private AreaOfWork areaOfWork;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
