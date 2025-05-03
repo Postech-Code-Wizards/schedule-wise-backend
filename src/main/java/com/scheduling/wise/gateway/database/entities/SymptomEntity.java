@@ -3,18 +3,21 @@ package com.scheduling.wise.gateway.database.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "symptoms")
+@Table(name = "symptom")
 @Getter
 @Setter
 @AllArgsConstructor
-public class SymptomsEntity {
+@NoArgsConstructor
+public class SymptomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -30,4 +33,7 @@ public class SymptomsEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL)
+    private List<DiagnosticEntity> diagnostic;
 }

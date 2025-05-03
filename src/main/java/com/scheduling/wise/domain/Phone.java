@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class Phone {
     private Long id;
-    private String ddd;
+    private String areaCode;
     private String phoneNumber;
     private PhoneType phoneType;
     private String operator;

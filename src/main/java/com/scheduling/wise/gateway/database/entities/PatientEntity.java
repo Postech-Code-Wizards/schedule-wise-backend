@@ -3,6 +3,7 @@ package com.scheduling.wise.gateway.database.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,12 +11,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "patients")
+@Table(name = "patient")
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PatientEntity {
 
     @Id
@@ -24,13 +27,7 @@ public class PatientEntity {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private UserEntity userEntityId;
-
-    @Column(name = "emergency_contact_id")
-    private EmergencyContactEntity emergencyContactEntity;
-
-    @Column(name = "phone_id", nullable = false)
-    private PhoneEntity phoneId;
+    private Long userId;
 
     @Column(name = "has_allergies", nullable = false)
     private Boolean hasAllergies = false;
@@ -45,4 +42,18 @@ public class PatientEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "phone_id")
+    private PhoneEntity phone;
+
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+    private EmergencyContactEntity emergencyContactId;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<PhoneEntity> phones;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<ConsultationEntity> consultations;
 }
+

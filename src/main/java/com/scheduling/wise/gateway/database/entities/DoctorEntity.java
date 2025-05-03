@@ -4,6 +4,7 @@ import com.scheduling.wise.domain.enums.Specialty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
@@ -11,12 +12,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "doctor")
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class DoctorEntity {
 
     @Id
@@ -25,16 +28,10 @@ public class DoctorEntity {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private UserEntity userEntityId;
-
-    @Column(name = "phone_id", nullable = false)
-    private PhoneEntity phone;
-
-    @Column(name = "email", nullable = false)
-    private String email;
+    private Long userId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "special", nullable = false)
+    @Column(name = "specialty", nullable = false)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private Specialty specialty;
 
@@ -48,4 +45,11 @@ public class DoctorEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "phone_id")
+    private PhoneEntity phone;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<ConsultationEntity> consultation;
 }

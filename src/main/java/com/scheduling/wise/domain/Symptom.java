@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 
 @Getter
 @AllArgsConstructor
-public class Symptoms {
+public class Symptom {
     private Long id;
     private String name;
     private ZonedDateTime createdAt;

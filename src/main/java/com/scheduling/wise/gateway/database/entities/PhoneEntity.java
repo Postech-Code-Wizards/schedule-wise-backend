@@ -4,6 +4,7 @@ import com.scheduling.wise.domain.enums.PhoneType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
@@ -17,6 +18,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PhoneEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +26,9 @@ public class PhoneEntity {
     private Long id;
 
     @Column(name = "area_code", nullable = false, length = 3)
-    private String ddd;
+    private String areaCode;
 
-    @Column(name = "phone_number", nullable = false, length = 50)
+    @Column(name = "phone_number", nullable = false, length = 55)
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -34,14 +36,18 @@ public class PhoneEntity {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private PhoneType phoneType;
 
-    @Column(name = "operator", nullable = false, length = 50)
+    @Column(name = "operator", length = 50)
     private String operator;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private ZonedDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private ZonedDateTime updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private PatientEntity patient;
 }

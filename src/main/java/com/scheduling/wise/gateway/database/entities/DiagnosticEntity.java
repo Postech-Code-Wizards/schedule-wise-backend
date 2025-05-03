@@ -3,37 +3,35 @@ package com.scheduling.wise.gateway.database.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "diagnostics")
+@Table(name = "diagnostic")
 @Getter
 @Setter
 @AllArgsConstructor
-public class DiagnosticsEntity {
+@NoArgsConstructor
+public class DiagnosticEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "consultation_id", nullable = false)
-    private ConsultationEntity consultationEntity;
+    @OneToOne
+    @JoinColumn(name = "consultation_id", nullable = false)
+    private ConsultationEntity consultation;
 
     @Column(name = "patient_id", nullable = false)
-    private PatientEntity patientEntity;
+    private Long patientId;
 
     @Column(name = "doctor_id", nullable = false)
-    private DoctorEntity doctorEntity;
-
-    @Column(name = "symptoms_id", nullable = false)
-    private SymptomsEntity symptomsEntity;
-
-    @Column(name = "prescriptions_details_id", nullable = false)
-    private PrescriptionDetailsEntity prescriptionDetailsEntity;
+    private Long doctorId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -42,4 +40,11 @@ public class DiagnosticsEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "symptom_id")
+    private SymptomEntity symptom;
+
+    @OneToMany(mappedBy = "diagnostic", cascade = CascadeType.ALL)
+    private List<PrescriptionDetailsEntity> prescriptionDetails;
 }

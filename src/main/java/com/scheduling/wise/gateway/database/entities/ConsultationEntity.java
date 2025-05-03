@@ -4,6 +4,7 @@ import com.scheduling.wise.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcType;
@@ -13,25 +14,28 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "consultations")
+@Table(name = "consultation")
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ConsultationEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "patient_id", nullable = false)
-    private PatientEntity patientId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "patient_id")
+    private PatientEntity patient;
 
-    @Column(name = "doctor_id", nullable = false)
-    private DoctorEntity doctorId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "doctor_id")
+    private DoctorEntity doctor;
 
-    @Column(name = "nurse_id", nullable = false)
-    private NurseEntity nurseId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "nurse_id")
+    private NurseEntity nurse;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -41,14 +45,17 @@ public class ConsultationEntity {
     @Column(nullable = false, name = "scheduled_at")
     private ZonedDateTime scheduledAt;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private ZonedDateTime createdAt;
-
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @Column(nullable = false, name = "completed_at")
+    @Column(name = "completed_at")
     private ZonedDateTime completedAt;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
+
+    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
+    private DiagnosticEntity diagnostic;
 }
