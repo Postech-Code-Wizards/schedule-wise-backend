@@ -191,16 +191,6 @@
 					<mainClass>com.scheduling.wise.WiseApplication</mainClass>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>10.21.0</version>
-				<configuration>
-					<url>jdbc:postgresql://localhost:5432/wise</url>
-					<user>postgres</user>
-					<password>admin</password>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 

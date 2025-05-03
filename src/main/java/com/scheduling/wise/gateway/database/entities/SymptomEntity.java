@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "symptom")
@@ -34,6 +33,7 @@ public class SymptomEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL)
-    private List<DiagnosticEntity> diagnostic;
+    @ManyToOne
+    @JoinColumn(name = "diagnostic_id")
+    private DiagnosticEntity diagnostic;
 }

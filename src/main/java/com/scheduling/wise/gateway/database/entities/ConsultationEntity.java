@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "consultation")
@@ -56,6 +57,6 @@ public class ConsultationEntity {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
-    private DiagnosticEntity diagnostic;
+    @OneToMany(mappedBy = "consultation", cascade = CascadeType.ALL)
+    private List<DiagnosticEntity> diagnostics;
 }

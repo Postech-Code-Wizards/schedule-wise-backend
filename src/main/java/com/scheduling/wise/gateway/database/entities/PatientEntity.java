@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -43,17 +42,16 @@ public class PatientEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "phone_id")
-    private PhoneEntity phone;
-
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-    private EmergencyContactEntity emergencyContactId;
+    private EmergencyContactEntity emergencyContactEntity;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<PhoneEntity> phones;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<ConsultationEntity> consultations;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<DiagnosticEntity> diagnostics;
 }
 

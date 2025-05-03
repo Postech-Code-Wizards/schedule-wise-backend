@@ -50,4 +50,12 @@ public class PhoneEntity {
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private PatientEntity patient;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private DoctorEntity doctor;
+
+    @ManyToOne
+    @JoinColumn(name = "nurse_id")
+    private NurseEntity nurse;
 }

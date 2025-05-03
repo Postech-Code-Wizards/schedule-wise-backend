@@ -42,9 +42,8 @@ public class NurseEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "phone_id")
-    private PhoneEntity phone;
+    @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL)
+    private List<PhoneEntity> phones;
 
     @OneToMany(mappedBy = "nurse", cascade = CascadeType.ALL)
     private List<ConsultationEntity> consultation;
