@@ -10,9 +10,9 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class Consultation {
     private Long id;
-    private Patient patient;  // Referência para o paciente (não a entidade)
-    private Doctor doctor;    // Referência para o médico (não a entidade)
-    private Nurse nurse;      // Referência para o enfermeiro (não a entidade)
+    private Patient patient;
+    private Doctor doctor;
+    private Nurse nurse;
     private Status status;
     private ZonedDateTime scheduledAt;
     private ZonedDateTime createdAt;
