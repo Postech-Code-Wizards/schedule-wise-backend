@@ -1,0 +1,5 @@
+type EmergencyContact {
+  name: String
+  relationship: String
+  phone: Phone
+}

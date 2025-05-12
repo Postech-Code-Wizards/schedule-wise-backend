@@ -1,0 +1,9 @@
+type Patient {
+    id: ID!
+    user: User!
+    emergencyContact: EmergencyContact
+    phone: Phone
+    dateOfBirth: String
+    createdAt: String
+    updatedAt: String
+}
