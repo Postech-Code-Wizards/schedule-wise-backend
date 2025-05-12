@@ -1,0 +1,8 @@
+type Nurse {
+    id: ID!
+    user: User!
+    phone: Phone
+    email: String!
+    createdAt: String
+    updatedAt: String
+}
