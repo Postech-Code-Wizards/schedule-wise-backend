@@ -1,0 +1,33 @@
+input ConsultationInput {
+    patientId: ID!
+    doctorId: ID!
+    nurseId: ID
+    status: Status!
+    scheduledAt: String!
+}
+
+input ConsultationUpdateInput {
+    id: ID!
+    doctorId: ID
+    nurseId: ID
+    status: Status
+    scheduledAt: String
+    completedAt: String
+}
+
+input DiagnosticInput {
+    consultationId: ID!
+    patientId: ID!
+    doctorId: ID!
+    symptomId: ID!
+    prescriptionDetails: PrescriptionDetailsInput!
+}
+
+input PrescriptionDetailsInput {
+    medicationName: String!
+    dosage: String!
+    frequency: String!
+    administrationForm: String!
+    instructions: String!
+    followUpDate: String
+}

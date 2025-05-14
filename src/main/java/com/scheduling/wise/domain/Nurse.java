@@ -15,4 +15,8 @@ public class Nurse {
     private AreaOfWork areaOfWork;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+
+    public Nurse(Long id) {
+        this.id = id;
+    }
 }

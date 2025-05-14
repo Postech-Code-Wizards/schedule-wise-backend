@@ -17,4 +17,8 @@ public class Patient {
     private LocalDate dateOfBirth;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+
+    public Patient(Long id){
+        this.id = id;
+    }
 }

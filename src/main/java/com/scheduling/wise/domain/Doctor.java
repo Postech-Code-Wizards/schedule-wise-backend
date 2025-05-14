@@ -17,4 +17,9 @@ public class Doctor {
     private String crm;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+
+    public Doctor(Long id){
+        this.id = id;
+    }
+
 }

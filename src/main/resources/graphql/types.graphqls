@@ -1,0 +1,28 @@
+type Query {
+    getConsultation(id: ID!): Consultation
+    getConsultations: [Consultation]
+
+    diagnostic(id: ID!): Diagnostic
+    diagnostics: [Diagnostic]
+
+    doctor(id: ID!): Doctor
+    doctors: [Doctor]
+
+    nurse(id: ID!): Nurse
+    nurses: [Nurse]
+
+    patient(id: ID!): Patient
+    patients: [Patient]
+
+    symptom(id: ID!): Symptom
+    symptoms: [Symptom]
+}
+
+type Mutation {
+    createConsultation(input: ConsultationInput!): Consultation
+    updateConsultation(input: ConsultationUpdateInput!): Consultation
+
+    createDiagnostic(input: DiagnosticInput!): Diagnostic
+
+    createPrescription(input: PrescriptionDetailsInput!): PrescriptionDetails
+}
