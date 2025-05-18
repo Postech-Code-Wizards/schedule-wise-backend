@@ -22,15 +22,6 @@ public class SymptomConverter {
         );
     }
 
-    public SymptomRequest toRequest(Symptom domain) {
-        if (domain == null) return null;
-
-        return new SymptomRequest(
-                domain.getId(),
-                domain.getName()
-        );
-    }
-
     public SymptomResponse toResponse(Symptom domain) {
         if (domain == null) return null;
 

@@ -1,6 +1,5 @@
 package com.scheduling.wise.domain;
 
-import com.scheduling.wise.domain.enums.PhoneType;
 import com.scheduling.wise.domain.enums.RelationshipType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class EmergencyContact {
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 
-    public EmergencyContact(Long id){
+    public EmergencyContact(Long id) {
         this.id = id;
     }
 }

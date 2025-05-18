@@ -29,18 +29,6 @@ public class PatientConverter {
         );
     }
 
-    public PatientRequest toRequest(Patient patient) {
-        if (patient == null) return null;
-
-        return new PatientRequest(
-                patient.getId(),
-                patient.getUser() != null ? patient.getUser().getId() : null,
-                patient.getEmergencyContact() != null ? patient.getEmergencyContact().getId() : null,
-                patient.getPhone() != null ? patient.getPhone().getId() : null,
-                patient.getDateOfBirth()
-        );
-    }
-
     public PatientResponse toResponse(Patient patient) {
         if (patient == null) return null;
 
@@ -61,7 +49,7 @@ public class PatientConverter {
         // Pega primeiro telefone da lista, se existir
         Phone phone = null;
         if (entity.getPhones() != null && !entity.getPhones().isEmpty()) {
-            phone = new Phone(entity.getPhones().get(0).getId());
+            phone = new Phone(entity.getPhones().getFirst().getId());
         }
 
         EmergencyContact emergencyContact = null;

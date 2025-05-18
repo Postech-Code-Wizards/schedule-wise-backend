@@ -28,19 +28,6 @@ public class DoctorConverter {
         );
     }
 
-    public DoctorRequest toRequest(Doctor doctor) {
-        if (doctor == null) return null;
-        return new DoctorRequest(
-                doctor.getId(),
-                doctor.getUser() != null ? doctor.getUser().getId() : null,
-                doctor.getPhone() != null ? doctor.getPhone().getId() : null,
-                doctor.getEmail(),
-                doctor.getSpecialty(),
-                doctor.getConsultations(),
-                doctor.getCrm()
-        );
-    }
-
     public DoctorResponse toResponse(Doctor doctor) {
         if (doctor == null) return null;
         return new DoctorResponse(

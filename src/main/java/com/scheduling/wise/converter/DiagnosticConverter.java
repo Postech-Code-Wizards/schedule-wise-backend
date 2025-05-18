@@ -37,33 +37,13 @@ public class DiagnosticConverter {
         );
     }
 
-    public DiagnosticRequest toRequest(Diagnostic diagnostic) {
-        if (diagnostic == null) return null;
-
-        List<Long> symptomIds = null;
-        if (diagnostic.getSymptoms() != null) {
-            symptomIds = diagnostic.getSymptoms().stream()
-                    .map(Symptom::getId)
-                    .collect(Collectors.toList());
-        }
-
-        return new DiagnosticRequest(
-                diagnostic.getId(),
-                diagnostic.getConsultation() != null ? diagnostic.getConsultation().getId() : null,
-                diagnostic.getPatient() != null ? diagnostic.getPatient().getId() : null,
-                diagnostic.getDoctor() != null ? diagnostic.getDoctor().getId() : null,
-                symptomIds,
-                diagnostic.getPrescriptionDetails() != null ? diagnostic.getPrescriptionDetails().getId() : null
-        );
-    }
-
     public DiagnosticsResponse toResponse(Diagnostic diagnostic) {
         if (diagnostic == null) return null;
 
         // Aqui o campo symptom é singular no response, mas no domain é lista — pode ser um problema de modelagem
         // Vou pegar o primeiro symptom pra preencher o response, ajusta se quiser diferente
         Symptom firstSymptom = (diagnostic.getSymptoms() != null && !diagnostic.getSymptoms().isEmpty())
-                ? diagnostic.getSymptoms().get(0)
+                ? diagnostic.getSymptoms().getFirst()
                 : null;
 
         return new DiagnosticsResponse(
@@ -91,7 +71,7 @@ public class DiagnosticConverter {
         PrescriptionDetails prescription = null;
         if (entity.getPrescriptionDetails() != null && !entity.getPrescriptionDetails().isEmpty()) {
             // Pegando o primeiro só, ajusta se for diferente
-            prescription = new PrescriptionDetails(entity.getPrescriptionDetails().get(0).getId());
+            prescription = new PrescriptionDetails(entity.getPrescriptionDetails().getFirst().getId());
         }
 
         return new Diagnostic(

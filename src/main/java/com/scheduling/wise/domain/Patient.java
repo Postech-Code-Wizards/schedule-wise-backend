@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class Patient {
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 
-    public Patient(Long id){
+    public Patient(Long id) {
         this.id = id;
     }
 }

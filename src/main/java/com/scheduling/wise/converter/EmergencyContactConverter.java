@@ -27,18 +27,6 @@ public class EmergencyContactConverter {
         );
     }
 
-    public EmergencyContactRequest toRequest(EmergencyContact contact) {
-        if (contact == null) return null;
-
-        return new EmergencyContactRequest(
-                contact.getId(),
-                contact.getPatient() != null ? contact.getPatient().getId() : null,
-                contact.getContactName(),
-                contact.getPhone() != null ? contact.getPhone().getId() : null,
-                contact.getRelationshipType()
-        );
-    }
-
     public EmergencyContactResponse toResponse(EmergencyContact contact) {
         if (contact == null) return null;
 

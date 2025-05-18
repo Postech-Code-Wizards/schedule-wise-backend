@@ -25,18 +25,6 @@ public class PhoneConverter {
         );
     }
 
-    public PhoneRequest toRequest(Phone phone) {
-        if (phone == null) return null;
-
-        return new PhoneRequest(
-                phone.getId(),
-                phone.getAreaCode(),
-                phone.getPhoneNumber(),
-                phone.getPhoneType(),
-                phone.getOperator()
-        );
-    }
-
     public PhoneResponse toResponse(Phone phone) {
         if (phone == null) return null;
 

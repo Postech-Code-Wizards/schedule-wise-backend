@@ -27,20 +27,6 @@ public class PrescriptionDetailsConverter {
         );
     }
 
-    public PrescriptionDetailsRequest toRequest(PrescriptionDetails domain) {
-        if (domain == null) return null;
-
-        return new PrescriptionDetailsRequest(
-                domain.getId(),
-                domain.getMedicationName(),
-                domain.getDosage(),
-                domain.getFrequency(),
-                domain.getRouteOfAdministration(),
-                domain.getInstructions(),
-                domain.getFollowUpDate()
-        );
-    }
-
     public PrescriptionDetailsResponse toResponse(PrescriptionDetails domain) {
         if (domain == null) return null;
 

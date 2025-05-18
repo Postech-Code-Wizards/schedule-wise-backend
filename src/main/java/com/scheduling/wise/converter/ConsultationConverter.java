@@ -35,22 +35,6 @@ public class ConsultationConverter {
         );
     }
 
-    public ConsultationRequest toRequest(Consultation consultation) {
-        if (consultation == null) return null;
-
-        return new ConsultationRequest(
-                consultation.getId(),
-                consultation.getPatient() != null ? consultation.getPatient().getId() : null,
-                consultation.getDoctor() != null ? consultation.getDoctor().getId() : null,
-                consultation.getNurse() != null ? consultation.getNurse().getId() : null,
-                consultation.getStatus(),
-                consultation.getScheduledAt(),
-                consultation.getCreatedAt(),
-                consultation.getUpdatedAt(),
-                consultation.getCompletedAt()
-        );
-    }
-
     public ConsultationResponse toResponse(Consultation consultation) {
         if (consultation == null) return null;
 
@@ -136,7 +120,7 @@ public class ConsultationConverter {
     }
 
     public List<ConsultationResponse> toResponse(List<Consultation> consultations) {
-        if (consultations == null) return null;
+        if (consultations == null) return List.of();
         return consultations.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());

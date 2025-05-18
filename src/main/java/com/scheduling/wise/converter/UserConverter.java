@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Component
 public class UserConverter {
 
-    // Converte UserRequest → User
     public User toDomain(UserRequest request) {
         if (request == null) return null;
         return new User(
@@ -27,19 +26,6 @@ public class UserConverter {
         );
     }
 
-    // Converte User → UserRequest
-    public UserRequest toRequest(User user) {
-        if (user == null) return null;
-        return new UserRequest(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getUserType(),
-                user.isActive()
-        );
-    }
-
-    // Converte User → UserResponse
     public UserResponse toResponse(User user) {
         if (user == null) return null;
         return new UserResponse(
@@ -54,7 +40,6 @@ public class UserConverter {
         );
     }
 
-    // Converte UserEntity → User
     public User toDomain(UserEntity entity) {
         if (entity == null) return null;
         return new User(
@@ -69,7 +54,6 @@ public class UserConverter {
         );
     }
 
-    // Converte User → UserEntity
     public UserEntity toEntity(User user) {
         if (user == null) return null;
         return UserEntity.builder()

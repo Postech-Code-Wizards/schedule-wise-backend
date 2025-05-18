@@ -34,24 +34,6 @@ public class NurseConverter {
         );
     }
 
-    public NurseRequest toRequest(Nurse nurse) {
-        if (nurse == null) return null;
-
-        List<PhoneResponse> phoneResponses = null;
-        if (nurse.getPhones() != null) {
-            phoneResponses = nurse.getPhones().stream()
-                    .map(phone -> new PhoneResponse(phone.getId()))
-                    .collect(Collectors.toList());
-        }
-
-        return new NurseRequest(
-                nurse.getId(),
-                nurse.getUser() != null ? nurse.getUser().getId() : null,
-                phoneResponses,
-                nurse.getAreaOfWork()
-        );
-    }
-
     public NurseResponse toResponse(Nurse nurse) {
         if (nurse == null) return null;
         return new NurseResponse(

@@ -1,6 +1,5 @@
 package com.scheduling.wise.gateway.database;
 
-import com.scheduling.wise.controller.exceptions.ConsultationNotFoundException;
 import com.scheduling.wise.converter.DiagnosticConverter;
 import com.scheduling.wise.domain.Diagnostic;
 import com.scheduling.wise.gateway.DiagnosticGateway;
