@@ -1,0 +1,22 @@
+package com.scheduling.wise.domain.dtos.response;
+
+import com.scheduling.wise.domain.Phone;
+import com.scheduling.wise.domain.User;
+import com.scheduling.wise.domain.enums.AreaOfWork;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.time.ZonedDateTime;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+public class NurseResponse {
+    Long id;
+    User user;
+    List<Phone> phones;
+    AreaOfWork areaOfWork;
+    ZonedDateTime createdAt;
+    ZonedDateTime updatedAt;
+
+}

@@ -5,8 +5,13 @@ import com.scheduling.wise.domain.Consultation;
 import java.util.List;
 
 public interface ConsultationGateway {
-    void saveConsultation(Consultation consultation);
-    List<Consultation> listUserConsultationsByUserId(Long id);
-    Consultation getConsultationById(Long id);
-    void deleteConsultationById(Long id);
+    void save(Consultation consultation);
+
+    List<Consultation> getAllById(Long id);
+
+    Consultation getById(Long id);
+
+    void update(Long id, Consultation consultation);
+
+    void delete(Long id);
 }

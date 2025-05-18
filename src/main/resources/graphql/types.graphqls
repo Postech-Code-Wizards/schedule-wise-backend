@@ -1,28 +1,192 @@
-type Query {
-    getConsultation(id: ID!): Consultation
-    getConsultations: [Consultation]
-
-    diagnostic(id: ID!): Diagnostic
-    diagnostics: [Diagnostic]
-
-    doctor(id: ID!): Doctor
-    doctors: [Doctor]
-
-    nurse(id: ID!): Nurse
-    nurses: [Nurse]
-
-    patient(id: ID!): Patient
-    patients: [Patient]
-
-    symptom(id: ID!): Symptom
-    symptoms: [Symptom]
+type Consultation {
+    id: ID!
+    patient: Patient
+    doctor: Doctor
+    nurse: Nurse
+    status: Status
+    scheduledAt: String
+    createdAt: String
+    updatedAt: String
+    completedAt: String
 }
 
-type Mutation {
-    createConsultation(input: ConsultationInput!): Consultation
-    updateConsultation(input: ConsultationUpdateInput!): Consultation
+type Diagnostic {
+    id: ID!
+    consultation: Consultation
+    patient: Patient
+    doctor: Doctor
+    symptom: Symptom
+    prescriptionDetails: PrescriptionDetails
+    createdAt: String
+    updatedAt: String
+}
 
-    createDiagnostic(input: DiagnosticInput!): Diagnostic
+type Doctor {
+    id: ID!
+    user: User
+    phone: Phone
+    email: String
+    specialty: Specialty
+    crm: String
+    createdAt: String
+    updatedAt: String
+}
 
-    createPrescription(input: PrescriptionDetailsInput!): PrescriptionDetails
+type Nurse {
+    id: ID!
+    user: User
+    phone: Phone
+    areaOfWork: AreaOfWork
+    createdAt: String
+    updatedAt: String
+}
+
+type Patient {
+    id: ID!
+    user: User
+    emergencyContact: EmergencyContact
+    phone: Phone
+    dateOfBirth: String
+    createdAt: String
+    updatedAt: String
+}
+
+type EmergencyContact {
+    id: ID!
+    patient: Patient
+    contactName: String
+    phone: Phone
+    relationshipType: RelationshipType
+    createdAt: String
+    updatedAt: String
+}
+
+type User {
+    id: ID!
+    email: String
+    password: String
+    userType: UserType
+    isActive: Boolean
+    createdAt: String
+    updatedAt: String
+    deletedAt: String
+}
+
+type Phone {
+    id: ID!
+    areaCode: String
+    phoneNumber: String
+    phoneType: PhoneType
+    operator: String
+    createdAt: String
+    updatedAt: String
+}
+
+type Symptom {
+    id: ID!
+    name: String
+    createdAt: String
+    updatedAt: String
+}
+
+type PrescriptionDetails {
+    id: ID!
+    medicationName: String
+    dosage: String
+    frequency: String
+    administrationForm: String
+    instructions: String
+    followUpDate: String
+    createdAt: String
+    updatedAt: String
+}
+
+enum Status {
+    SCHEDULED
+    ACCOMPLISHED
+    CANCELLED
+    RESCHEDULED
+}
+
+enum Specialty {
+    ALLERGY_AND_IMMUNOLOGY
+    ANESTHESIOLOGY
+    CARDIOLOGY
+    DERMATOLOGY
+    EMERGENCY_MEDICINE
+    ENDOCRINOLOGY
+    FAMILY_MEDICINE
+    GASTROENTEROLOGY
+    GENERAL_SURGERY
+    GERIATRICS
+    HEMATOLOGY
+    INFECTIOUS_DISEASES
+    INTERNAL_MEDICINE
+    NEPHROLOGY
+    NEUROLOGY
+    OBSTETRICS_AND_GYNECOLOGY
+    ONCOLOGY
+    OPHTHALMOLOGY
+    ORTHOPEDICS
+    OTOLARYNGOLOGY
+    PEDIATRICS
+    PLASTIC_SURGERY
+    PSYCHIATRY
+    PULMONOLOGY
+    RHEUMATOLOGY
+    UROLOGY
+}
+
+enum AreaOfWork {
+    ANESTHESIA
+    CARDIAC
+    COMMUNITY_HEALTH
+    CRITICAL_CARE
+    DIALYSIS
+    EMERGENCY
+    GERIATRIC
+    HOSPICE_AND_PALLIATIVE_CARE
+    HOME_HEALTH
+    INFECTIOUS_DISEASES
+    NEONATAL
+    OCCUPATIONAL_HEALTH
+    ONCOLOGY
+    PEDIATRIC
+    PSYCHIATRIC
+    PUBLIC_HEALTH
+    REHABILITATION
+    SCHOOL_NURSING
+    SURGICAL
+    TELEHEALTH
+}
+
+enum UserType {
+    DOCTOR
+    NURSE
+    PATIENT
+}
+
+enum PhoneType {
+    CELL_PHONE
+    TELEPHONE
+    BUSINESS_PHONE
+}
+
+enum RelationshipType {
+    BROTHER
+    CHILD
+    FATHER
+    FRIEND
+    GRANDFATHER
+    GRANDMOTHER
+    MOTHER
+    PARTNER
+    SISTER
+    SPOUSE
+    UNCLE
+    AUNT
+    COUSIN
+    GUARDIAN
+    NEIGHBOR
+    OTHER
 }

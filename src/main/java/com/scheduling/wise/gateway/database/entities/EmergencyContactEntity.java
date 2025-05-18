@@ -42,7 +42,7 @@ public class EmergencyContactEntity {
 
     @OneToOne
     @JoinColumn(name = "contact_phone_id")
-    private PhoneEntity contactPhone;
+    private PhoneEntity phone;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "relationship_type", nullable = false)

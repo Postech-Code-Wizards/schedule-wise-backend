@@ -27,7 +27,7 @@ public class NurseEntity {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private Long user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "area_of_work", nullable = false)

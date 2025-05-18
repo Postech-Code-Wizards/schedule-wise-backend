@@ -1,11 +1,10 @@
 package com.scheduling.wise.controller.resolvers;
 
+import com.scheduling.wise.converter.ConsultationConverter;
 import com.scheduling.wise.domain.Consultation;
-import com.scheduling.wise.dtos.request.RegisterConsultationRequest;
-import com.scheduling.wise.dtos.response.ListConsultationResponse;
-import com.scheduling.wise.mappers.ConsultationRequestMapper;
-import com.scheduling.wise.usecase.usecases.consultation.CreateConsultationUseCase;
-import com.scheduling.wise.usecase.usecases.consultation.ListUserConsultationsUseCase;
+import com.scheduling.wise.domain.dtos.request.ConsultationRequest;
+import com.scheduling.wise.domain.dtos.response.ConsultationResponse;
+import com.scheduling.wise.usecase.consultation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -18,18 +17,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultationResolver {
     private final CreateConsultationUseCase createConsultationUseCase;
-    private final ListUserConsultationsUseCase listUserConsultationsUseCase;
+    private final GetConsultationUseCase getConsultationUseCase;
+    private final GetAllConsultationUseCase getAllConsultationUseCase;
+    private final UpdateConsultationUseCase updateConsultationUseCase;
+    private final DeleteConsultationUseCase deleteConsultationUseCase;
 
-    private final ConsultationRequestMapper consultationRequestMapper;
+    private final ConsultationConverter converter;
 
     @MutationMapping
-    public void createConsultation(@Argument("input") RegisterConsultationRequest request) {
-        Consultation consultation = consultationRequestMapper.toConsultation(request);
-        createConsultationUseCase.execute(consultation);
+    public void createConsultation(@Argument("input") ConsultationRequest consultationRequest) {
+        createConsultationUseCase.execute(converter.toDomain(consultationRequest));
     }
 
     @QueryMapping
-    public List<ListConsultationResponse> getConsultations(@Argument("id") Long id) {
-        return listUserConsultationsUseCase.execute(id);
+    public ConsultationResponse getConsultationById(@Argument("id") Long id) {
+        var domain = getConsultationUseCase.execute(id);
+        return converter.toResponse(domain);
+    }
+
+    @QueryMapping
+    public List<ConsultationResponse> getConsultations(@Argument("id") Long id) {
+        var domain = getAllConsultationUseCase.execute(id);
+        return converter.toResponse(domain);
+    }
+
+    @MutationMapping
+    public void updateConsultation(@Argument("id") Long id,
+                                   @Argument("input") ConsultationRequest consultationRequest) {
+        Consultation domain = converter.toDomain(consultationRequest);
+        updateConsultationUseCase.execute(id, domain);
+    }
+
+    @MutationMapping
+    public void deleteConsultation(@Argument("id") Long id) {
+        deleteConsultationUseCase.execute(id);
     }
 }

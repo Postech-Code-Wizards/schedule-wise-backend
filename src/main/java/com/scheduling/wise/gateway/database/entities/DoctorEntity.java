@@ -28,7 +28,7 @@ public class DoctorEntity {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private Long user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "specialty", nullable = false)

@@ -7,7 +7,6 @@ input ConsultationInput {
 }
 
 input ConsultationUpdateInput {
-    id: ID!
     doctorId: ID
     nurseId: ID
     status: Status
@@ -23,6 +22,13 @@ input DiagnosticInput {
     prescriptionDetails: PrescriptionDetailsInput!
 }
 
+input DiagnosticUpdateInput {
+    patientId: ID!
+    doctorId: ID!
+    symptomId: ID!
+    prescriptionDetails: PrescriptionDetailsInput!
+}
+
 input PrescriptionDetailsInput {
     medicationName: String!
     dosage: String!
@@ -30,4 +36,108 @@ input PrescriptionDetailsInput {
     administrationForm: String!
     instructions: String!
     followUpDate: String
+}
+
+input PrescriptionDetailsUpdateInput {
+    medicationName: String!
+    dosage: String!
+    frequency: String!
+    administrationForm: String!
+    instructions: String!
+    followUpDate: String
+}
+
+input DoctorInput {
+    id: ID!
+    user: ID!
+    phone: ID!
+    email: String
+    specialty: Specialty
+    crm: String
+}
+
+input DoctorUpdateInput {
+    user: ID!
+    phone: ID!
+    email: String
+    specialty: Specialty
+    crm: String
+}
+
+input PatientInput {
+    id: ID!
+    user: ID!
+    emergencyContact: ID!
+    phone: ID!
+    dateOfBirth: String
+}
+
+input PatientUpdateInput {
+    user: ID!
+    emergencyContact: ID!
+    phone: ID!
+    dateOfBirth: String
+}
+
+input NurseInput {
+    id: ID!
+    user: ID!
+    phone: ID!
+    areaOfWork: AreaOfWork
+}
+
+input NurseUpdateInput {
+    user: ID!
+    phone: ID!
+    areaOfWork: AreaOfWork
+}
+
+input EmergencyContactInput {
+    id: ID!
+    patient: ID!
+    contactName: String
+    phone: PhoneInput
+    relationshipType: RelationshipType
+}
+
+input EmergencyContactUpdateInput {
+    patient: ID!
+    contactName: String
+    phone: PhoneInput
+    relationshipType: RelationshipType
+}
+
+input PhoneInput {
+    id: ID!
+    areaCode: String
+    phoneNumber: String
+    phoneType: PhoneType
+    operator: String
+}
+
+input PhoneUpdateInput {
+    areaCode: String
+    phoneNumber: String
+    phoneType: PhoneType
+    operator: String
+}
+
+input SymptomInput {
+    id: ID!
+    name: String
+}
+
+input SymptomUpdateInput {
+    name: String!
+}
+
+input UserInput {
+    email: String!
+    password: String!
+    userType: UserType!
+}
+
+input UserUpdateInput {
+    email: String
+    password: String
 }

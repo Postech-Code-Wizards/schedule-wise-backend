@@ -14,7 +14,7 @@ import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "phone")
+@Table(name = "emergencycontact")
 @Getter
 @Setter
 @AllArgsConstructor

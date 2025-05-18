@@ -26,7 +26,7 @@ public class PatientEntity {
     private Long id;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private Long user;
 
     @Column(name = "has_allergies", nullable = false)
     private Boolean hasAllergies = false;
@@ -43,7 +43,7 @@ public class PatientEntity {
     private ZonedDateTime updatedAt;
 
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-    private EmergencyContactEntity emergencyContactEntity;
+    private EmergencyContactEntity emergencyContact;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<PhoneEntity> phones;
