@@ -8,4 +8,5 @@ public record UpdateConsultationInput(
         Long id,
         String scheduledAt,
         Status status
-) {}
+) {
+}

@@ -25,10 +25,6 @@ public class EmergencyContactEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "patient_id", nullable = false)
-    private PatientEntity patient;
-
     @Column(name = "contact_name", nullable = false)
     private String contactName;
 
@@ -48,4 +44,13 @@ public class EmergencyContactEntity {
     @Column(name = "relationship_type", nullable = false)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private RelationshipType relationshipType;
+
+    public com.scheduling.wise.domain.EmergencyContact toDomain() {
+        return com.scheduling.wise.domain.EmergencyContact.builder()
+                .contactName(this.contactName)
+                .relationshipType(this.relationshipType)
+                .phone(this.contactPhone != null ? this.contactPhone.toDomain() : null)
+                .build();
+    }
+
 }

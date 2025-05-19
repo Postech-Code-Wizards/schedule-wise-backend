@@ -8,4 +8,5 @@ public record CreateConsultationInput(
         Long patientId,
         Long nurseId,
         String scheduledAt
-) {}
+) {
+}

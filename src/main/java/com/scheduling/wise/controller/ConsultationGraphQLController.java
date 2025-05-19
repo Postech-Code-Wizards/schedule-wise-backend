@@ -1,6 +1,6 @@
 package com.scheduling.wise.controller;
 
-import com.scheduling.wise.application.ConsultationService;
+import com.scheduling.wise.application.service.ConsultationService;
 import com.scheduling.wise.controller.input.CreateConsultationInput;
 import com.scheduling.wise.controller.input.UpdateConsultationInput;
 import com.scheduling.wise.domain.Consultation;
@@ -9,7 +9,6 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Controller

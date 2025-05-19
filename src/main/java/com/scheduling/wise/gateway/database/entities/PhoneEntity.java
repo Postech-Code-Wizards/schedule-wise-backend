@@ -1,5 +1,6 @@
 package com.scheduling.wise.gateway.database.entities;
 
+import com.scheduling.wise.domain.Phone;
 import com.scheduling.wise.domain.enums.PhoneType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -58,4 +59,14 @@ public class PhoneEntity {
     @ManyToOne
     @JoinColumn(name = "nurse_id")
     private NurseEntity nurse;
+
+    public Phone toDomain() {
+        return Phone.builder()
+                .id(this.id)
+                .areaCode(this.areaCode)
+                .phoneNumber(this.phoneNumber)
+                .phoneType(this.phoneType)
+                .build();
+    }
+
 }

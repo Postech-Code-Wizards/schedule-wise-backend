@@ -1,7 +1,10 @@
 package com.scheduling.wise.gateway.database.mappers;
 
 import com.scheduling.wise.domain.Consultation;
-import com.scheduling.wise.gateway.database.entities.*;
+import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
+import com.scheduling.wise.gateway.database.entities.DoctorEntity;
+import com.scheduling.wise.gateway.database.entities.NurseEntity;
+import com.scheduling.wise.gateway.database.entities.PatientEntity;
 import org.springframework.stereotype.Component;
 
 @Component

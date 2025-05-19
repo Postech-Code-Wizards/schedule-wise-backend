@@ -1,4 +1,4 @@
-package com.scheduling.wise.application;
+package com.scheduling.wise.application.service;
 
 import com.scheduling.wise.controller.input.CreateConsultationInput;
 import com.scheduling.wise.controller.input.UpdateConsultationInput;
@@ -10,22 +10,23 @@ import com.scheduling.wise.domain.enums.Status;
 import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
 import com.scheduling.wise.gateway.database.mappers.ConsultationMapper;
 import com.scheduling.wise.gateway.database.repositories.ConsultationRepository;
+import com.scheduling.wise.gateway.messaging.message.StreamMessage;
+import com.scheduling.wise.gateway.messaging.message.enums.DeliveryMethod;
+import com.scheduling.wise.gateway.messaging.publisher.NotificationPublisher;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class ConsultationService {
 
     private final ConsultationRepository repository;
     private final ConsultationMapper mapper;
-
-    public ConsultationService(ConsultationRepository repository, ConsultationMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+    private final NotificationPublisher notificationPublisher;
 
     public Consultation createFromInput(CreateConsultationInput input) {
         Consultation consultation = Consultation.builder()
@@ -36,7 +37,17 @@ public class ConsultationService {
                 .status(Status.SCHEDULED)
                 .build();
 
-        return create(consultation);
+        var entity = mapper.toEntity(consultation);
+        ConsultationEntity saved = repository.save(entity);
+        Consultation created = mapper.toDomain(saved);
+
+        notificationPublisher.publishConsultationCreated(StreamMessage.builder()
+                .deliveryMethod(DeliveryMethod.EMAIL)
+                .recipient("paciente@email.com")
+                .message("Sua consulta foi agendada para " + created.getScheduledAt())
+                .build());
+
+        return created;
     }
 
     public Consultation updateFromInput(UpdateConsultationInput input) {
