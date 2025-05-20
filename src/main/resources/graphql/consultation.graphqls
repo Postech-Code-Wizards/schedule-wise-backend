@@ -1,0 +1,30 @@
+type Consultation {
+    id: ID!
+    doctor: Doctor!
+    patient: Patient!
+    nurse: Nurse
+    status: Status!
+    scheduledAt: String!
+    createdAt: String
+    updatedAt: String
+    completedAt: String
+}
+
+enum Status {
+    SCHEDULED
+    COMPLETED
+    CANCELED
+}
+
+input CreateConsultationInput {
+    doctorId: ID!
+    patientId: ID!
+    nurseId: ID
+    scheduledAt: String!
+}
+
+input UpdateConsultationInput {
+    id: ID!
+    status: Status
+    scheduledAt: String
+}

@@ -1,0 +1,10 @@
+type Doctor {
+    id: ID!
+    user: User!
+    phone: Phone
+    email: String!
+    specialty: Specialty!
+    crm: String!
+    createdAt: String
+    updatedAt: String
+}

@@ -1,5 +1,6 @@
 package com.scheduling.wise.gateway.database.entities;
 
+import com.scheduling.wise.domain.Patient;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,8 +43,9 @@ public class PatientEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-    private EmergencyContactEntity emergencyContactEntity;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "emergency_contact_id")
+    private EmergencyContactEntity emergencyContact;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<PhoneEntity> phones;
@@ -53,5 +55,19 @@ public class PatientEntity {
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<DiagnosticEntity> diagnostics;
+
+    public Patient toDomain() {
+        return com.scheduling.wise.domain.Patient.builder()
+                .id(this.id)
+                .emergencyContact(this.emergencyContact != null ? this.emergencyContact.toDomain() : null)
+                .phones(this.phones != null
+                        ? this.phones.stream().map(PhoneEntity::toDomain).toList()
+                        : List.of())
+                .dateOfBirth(this.dateOfBirth)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
+                .build();
+    }
+
 }
 

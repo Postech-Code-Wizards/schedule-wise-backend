@@ -1,0 +1,4 @@
+type Query {
+    getConsultationById(id: ID!): Consultation
+    listConsultations: [Consultation]
+}

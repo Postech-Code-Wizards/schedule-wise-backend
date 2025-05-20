@@ -1,5 +1,6 @@
 package com.scheduling.wise.gateway.database.entities;
 
+import com.scheduling.wise.domain.Doctor;
 import com.scheduling.wise.domain.enums.Specialty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -49,9 +50,18 @@ public class DoctorEntity {
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<PhoneEntity> phones;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<ConsultationEntity> consultation;
+    public Doctor toDomain() {
+        return Doctor.builder()
+                .id(this.id)
+                .phones(this.phones != null
+                        ? this.phones.stream().map(PhoneEntity::toDomain).toList()
+                        : List.of())
+                .specialty(this.specialty)
+                .crm(this.crm)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
+                .build();
+    }
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<DiagnosticEntity> diagnostics;
+
 }
