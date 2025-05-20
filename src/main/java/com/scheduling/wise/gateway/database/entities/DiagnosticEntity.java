@@ -80,12 +80,4 @@ public class DiagnosticEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
-//
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "diagnostic_id")
-//    private List<SymptomEntity> symptoms;
-//
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "diagnostic_id", nullable = false)
-//    private List<PrescriptionDetailsEntity> prescriptionDetails;
 }

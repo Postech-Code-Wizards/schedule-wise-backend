@@ -62,9 +62,6 @@ public class PhoneConverter {
         entity.setPhoneNumber(phone.getPhoneNumber());
         entity.setPhoneType(phone.getPhoneType());
         entity.setOperator(phone.getOperator());
-        // createdAt e updatedAt são controlados pelo Hibernate, não seta aqui.
-
-        // Não setar patient, doctor ou nurse aqui, isso deve ser feito no serviço se necessário.
 
         return entity;
     }

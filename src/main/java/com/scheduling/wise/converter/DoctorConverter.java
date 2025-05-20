@@ -30,7 +30,7 @@ public class DoctorConverter {
                 user,
                 phone,
                 request.getSpecialty(),
-                null,  // consultas ignoradas aqui
+                null,
                 request.getCrm(),
                 null,
                 null
@@ -63,7 +63,7 @@ public class DoctorConverter {
                 user,
                 phone,
                 entity.getSpecialty(),
-                null,  // consultas ignoradas
+                null,
                 entity.getCrm(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
