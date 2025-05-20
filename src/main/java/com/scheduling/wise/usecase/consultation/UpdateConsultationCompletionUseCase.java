@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UpdateConsultationUseCase {
+public class UpdateConsultationCompletionUseCase {
     private final ConsultationGateway consultationGateway;
 
     public void execute(Long id, Consultation consultation) {
-        consultationGateway.update(id, consultation);
+        consultationGateway.updateCompletion(id, consultation);
     }
 }

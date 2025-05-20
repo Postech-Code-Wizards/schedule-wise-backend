@@ -2,6 +2,8 @@ package com.scheduling.wise.usecase.prescriptiondetails;
 
 import com.scheduling.wise.domain.PrescriptionDetails;
 import com.scheduling.wise.gateway.PrescriptionDetailsGateway;
+import com.scheduling.wise.gateway.database.entities.PrescriptionDetailsEntity;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class CreatePrescriptionDetailsCase {
     private final PrescriptionDetailsGateway prescriptionDetailsGateway;
 
-    public void execute(PrescriptionDetails prescriptionDetails) {
-        prescriptionDetailsGateway.save(prescriptionDetails);
+    public PrescriptionDetailsEntity execute(PrescriptionDetails prescriptionDetails) {
+        return prescriptionDetailsGateway.save(prescriptionDetails);
     }
 }

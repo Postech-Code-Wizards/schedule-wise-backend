@@ -17,7 +17,6 @@ public class DiagnosticConverter {
     public Diagnostic toDomain(DiagnosticRequest request) {
         if (request == null) return null;
 
-        // Como request tem só IDs e uma lista de symptom IDs, vamos montar objetos só com IDs (muito importante evitar carregar objetos completos aqui)
         List<Symptom> symptoms = null;
         if (request.getSymptoms() != null) {
             symptoms = request.getSymptoms().stream()
@@ -31,7 +30,6 @@ public class DiagnosticConverter {
                 new Patient(request.getPatientId()),
                 new Doctor(request.getDoctorId()),
                 symptoms,
-                new PrescriptionDetails(request.getPrescriptionDetailsIs()), // corrigir se for typo: "Is" em vez de "Id"?
                 null,
                 null
         );
@@ -40,8 +38,6 @@ public class DiagnosticConverter {
     public DiagnosticsResponse toResponse(Diagnostic diagnostic) {
         if (diagnostic == null) return null;
 
-        // Aqui o campo symptom é singular no response, mas no domain é lista — pode ser um problema de modelagem
-        // Vou pegar o primeiro symptom pra preencher o response, ajusta se quiser diferente
         Symptom firstSymptom = (diagnostic.getSymptoms() != null && !diagnostic.getSymptoms().isEmpty())
                 ? diagnostic.getSymptoms().getFirst()
                 : null;
@@ -52,7 +48,6 @@ public class DiagnosticConverter {
                 diagnostic.getPatient(),
                 diagnostic.getDoctor(),
                 firstSymptom,
-                diagnostic.getPrescriptionDetails(),
                 diagnostic.getCreatedAt(),
                 diagnostic.getUpdatedAt()
         );
@@ -62,17 +57,6 @@ public class DiagnosticConverter {
         if (entity == null) return null;
 
         List<Symptom> symptoms = null;
-        if (entity.getSymptoms() != null) {
-            symptoms = entity.getSymptoms().stream()
-                    .map(symptomEntity -> new Symptom(symptomEntity.getId()))
-                    .collect(Collectors.toList());
-        }
-
-        PrescriptionDetails prescription = null;
-        if (entity.getPrescriptionDetails() != null && !entity.getPrescriptionDetails().isEmpty()) {
-            // Pegando o primeiro só, ajusta se for diferente
-            prescription = new PrescriptionDetails(entity.getPrescriptionDetails().getFirst().getId());
-        }
 
         return new Diagnostic(
                 entity.getId(),
@@ -80,7 +64,6 @@ public class DiagnosticConverter {
                 entity.getPatient() != null ? new Patient(entity.getPatient().getId()) : null,
                 entity.getDoctor() != null ? new Doctor(entity.getDoctor().getId()) : null,
                 symptoms,
-                prescription,
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );
@@ -91,20 +74,25 @@ public class DiagnosticConverter {
 
         DiagnosticEntity entity = new DiagnosticEntity();
         entity.setId(diagnostic.getId());
-        entity.setConsultation(diagnostic.getConsultation() != null ? new ConsultationEntity() {{
-            setId(diagnostic.getConsultation().getId());
-        }} : null);
-        entity.setPatient(diagnostic.getPatient() != null ? new PatientEntity() {{
-            setId(diagnostic.getPatient().getId());
-        }} : null);
-        entity.setDoctor(diagnostic.getDoctor() != null ? new DoctorEntity() {{
-            setId(diagnostic.getDoctor().getId());
-        }} : null);
 
-        // sintomas e prescrições: cuidado, isso geralmente é feito por cascata ou em outro serviço.
-        // Aqui só seto nulo para evitar efeito colateral.
-        entity.setSymptoms(null);
-        entity.setPrescriptionDetails(null);
+        if (diagnostic.getConsultation() != null) {
+            ConsultationEntity consultation = new ConsultationEntity();
+            consultation.setId(diagnostic.getConsultation().getId());
+            entity.setConsultation(consultation);
+        }
+
+        if (diagnostic.getPatient() != null) {
+            PatientEntity patient = new PatientEntity();
+            patient.setId(diagnostic.getPatient().getId());
+            entity.setPatient(patient);
+        }
+
+        if (diagnostic.getDoctor() != null) {
+            DoctorEntity doctor = new DoctorEntity();
+            doctor.setId(diagnostic.getDoctor().getId());
+            entity.setDoctor(doctor);
+        }
+
 
         entity.setCreatedAt(diagnostic.getCreatedAt());
         entity.setUpdatedAt(diagnostic.getUpdatedAt());

@@ -2,6 +2,7 @@ package com.scheduling.wise.usecase.diagnostic;
 
 import com.scheduling.wise.domain.Diagnostic;
 import com.scheduling.wise.gateway.DiagnosticGateway;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service;
 public class UpdateDiagnosticUseCase {
     private final DiagnosticGateway diagnosticGateway;
 
-    public void execute(Long id, Diagnostic diagnostic) {
-        diagnosticGateway.update(id, diagnostic);
+    @Transactional
+    public Diagnostic execute(Long id, Diagnostic diagnostic) {
+        return diagnosticGateway.update(id, diagnostic);
     }
 }

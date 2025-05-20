@@ -16,8 +16,8 @@ public class UserJpaGateway implements UserGateway {
     private final UserConverter converter;
 
     @Override
-    public void save(User user) {
-        userRepository.save(converter.toEntity(user));
+    public UserEntity save(User user) {
+        return userRepository.save(converter.toEntity(user));
     }
 
     @Override

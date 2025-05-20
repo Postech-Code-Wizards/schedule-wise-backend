@@ -2,6 +2,7 @@ package com.scheduling.wise.usecase.symptom;
 
 import com.scheduling.wise.domain.Symptom;
 import com.scheduling.wise.gateway.SymptomGateway;
+import com.scheduling.wise.gateway.database.entities.SymptomEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class CreateSymptomUseCase {
     private final SymptomGateway symptomGateway;
 
-    public void execute(Symptom symptom) {
-        symptomGateway.save(symptom);
+    public SymptomEntity execute(Symptom symptom) {
+        return symptomGateway.save(symptom);
     }
 }

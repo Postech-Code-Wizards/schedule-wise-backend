@@ -1,6 +1,5 @@
 package com.scheduling.wise.domain.dtos.response;
 
-import com.scheduling.wise.domain.Patient;
 import com.scheduling.wise.domain.Phone;
 import com.scheduling.wise.domain.enums.RelationshipType;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class EmergencyContactResponse {
     Long id;
-    Patient patient;
     String contactName;
     Phone phone;
     RelationshipType relationshipType;

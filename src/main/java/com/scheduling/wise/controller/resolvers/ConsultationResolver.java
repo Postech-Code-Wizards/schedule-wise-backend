@@ -19,33 +19,41 @@ public class ConsultationResolver {
     private final CreateConsultationUseCase createConsultationUseCase;
     private final GetConsultationUseCase getConsultationUseCase;
     private final GetAllConsultationUseCase getAllConsultationUseCase;
-    private final UpdateConsultationUseCase updateConsultationUseCase;
+    private final UpdateConsultationCompletionUseCase updateConsultationCompletionUseCase;
+    private final UpdateConsultationStatusUseCase updateConsultationStatusUseCase;
     private final DeleteConsultationUseCase deleteConsultationUseCase;
 
-    private final ConsultationConverter converter;
+    private final ConsultationConverter consultationConverter;
 
     @MutationMapping
     public void createConsultation(@Argument("input") ConsultationRequest consultationRequest) {
-        createConsultationUseCase.execute(converter.toDomain(consultationRequest));
+        createConsultationUseCase.execute(consultationConverter.toDomain(consultationRequest));
     }
 
     @QueryMapping
     public ConsultationResponse getConsultationById(@Argument("id") Long id) {
         var domain = getConsultationUseCase.execute(id);
-        return converter.toResponse(domain);
+        return consultationConverter.toResponse(domain);
     }
 
     @QueryMapping
     public List<ConsultationResponse> getConsultations(@Argument("id") Long id) {
         var domain = getAllConsultationUseCase.execute(id);
-        return converter.toResponse(domain);
+        return consultationConverter.toResponse(domain);
     }
 
     @MutationMapping
-    public void updateConsultation(@Argument("id") Long id,
-                                   @Argument("input") ConsultationRequest consultationRequest) {
-        Consultation domain = converter.toDomain(consultationRequest);
-        updateConsultationUseCase.execute(id, domain);
+    public void updateConsultationCompletion(@Argument("id") Long id,
+                                             @Argument("input") ConsultationRequest consultationRequest) {
+        Consultation consultation = consultationConverter.toDomain(consultationRequest);
+        updateConsultationCompletionUseCase.execute(id, consultation);
+    }
+
+    @MutationMapping
+    public void updateConsultationStatus(@Argument("id") Long id,
+                                         @Argument("input") ConsultationRequest consultationRequest) {
+        Consultation consultation = consultationConverter.toDomain(consultationRequest);
+        updateConsultationStatusUseCase.execute(id, consultation);
     }
 
     @MutationMapping

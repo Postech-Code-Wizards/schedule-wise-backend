@@ -1,6 +1,7 @@
 package com.scheduling.wise.usecase.consultation;
 
 import com.scheduling.wise.domain.Consultation;
+import com.scheduling.wise.domain.enums.Status;
 import com.scheduling.wise.gateway.ConsultationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ public class CreateConsultationUseCase {
     private final ConsultationGateway consultationGateway;
 
     public void execute(Consultation consultation) {
+        consultation.setStatus(Status.SCHEDULED);
         consultationGateway.save(consultation);
     }
 }

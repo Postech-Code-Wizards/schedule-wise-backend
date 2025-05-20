@@ -22,10 +22,6 @@ public class PrescriptionDetailsEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "diagnostic_id", nullable = false)
-    private DiagnosticEntity diagnostic;
-
     @Column(name = "medication_name", nullable = false)
     private String medicationName;
 
@@ -51,4 +47,8 @@ public class PrescriptionDetailsEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "diagnostic_id", nullable = false)
+    private DiagnosticEntity diagnostic;
 }

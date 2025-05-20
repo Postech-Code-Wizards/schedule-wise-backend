@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +16,7 @@ public class ConsultationRequest {
     Long doctorId;
     Long nurseId;
     Status status;
+    List<Long> diagnostics;
     ZonedDateTime scheduledAt;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;

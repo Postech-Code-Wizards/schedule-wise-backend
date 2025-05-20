@@ -12,7 +12,7 @@ import java.util.List;
 public class GetAllDiagnosticUseCase {
     private final DiagnosticGateway diagnosticGateway;
 
-    public List<Diagnostic> execute() {
-        return diagnosticGateway.getAll();
+    public List<Diagnostic> execute(Long consultationId) {
+        return diagnosticGateway.getAll(consultationId);
     }
 }

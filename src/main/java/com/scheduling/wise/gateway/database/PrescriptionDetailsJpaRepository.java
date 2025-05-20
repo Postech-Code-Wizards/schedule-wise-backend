@@ -18,8 +18,8 @@ public class PrescriptionDetailsJpaRepository implements PrescriptionDetailsGate
     private final PrescriptionDetailsConverter converter;
 
     @Override
-    public void save(PrescriptionDetails prescriptionDetails) {
-        repository.save(converter.toEntity(prescriptionDetails));
+    public PrescriptionDetailsEntity save(PrescriptionDetails prescriptionDetails) {
+        return repository.save(converter.toEntity(prescriptionDetails));
     }
 
     @Override
@@ -39,7 +39,6 @@ public class PrescriptionDetailsJpaRepository implements PrescriptionDetailsGate
                 .orElseThrow(() -> new EntityNotFoundException("Prescription details not found for id " + id));
         PrescriptionDetailsEntity prescriptionDetailsEntity = converter.toEntity(getById(id));
 
-        prescriptionDetailsEntity.setDiagnostic(newPrescriptionDetailsEntity.getDiagnostic());
         prescriptionDetailsEntity.setDosage(newPrescriptionDetailsEntity.getDosage());
         prescriptionDetailsEntity.setFrequency(newPrescriptionDetailsEntity.getFrequency());
         prescriptionDetailsEntity.setInstructions(newPrescriptionDetailsEntity.getInstructions());

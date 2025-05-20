@@ -6,22 +6,31 @@ import com.scheduling.wise.domain.User;
 import com.scheduling.wise.domain.dtos.request.DoctorRequest;
 import com.scheduling.wise.domain.dtos.response.DoctorResponse;
 import com.scheduling.wise.gateway.database.entities.DoctorEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class DoctorConverter {
+
+    private final UserConverter userConverter;
+    private final PhoneConverter phoneConverter;
+
     public Doctor toDomain(DoctorRequest request) {
         if (request == null) return null;
+
+        User user = request.getUser() != null ? new User(request.getUser()) : null;
+        Phone phone = request.getPhone() != null ? new Phone(request.getPhone()) : null;
+
         return new Doctor(
                 request.getId(),
-                new User(request.getUserId()),
-                new Phone(request.getPhoneId()),
-                request.getEmail(),
+                user,
+                phone,
                 request.getSpecialty(),
-                request.getConsultations(),
+                null,  // consultas ignoradas aqui
                 request.getCrm(),
                 null,
                 null
@@ -30,11 +39,11 @@ public class DoctorConverter {
 
     public DoctorResponse toResponse(Doctor doctor) {
         if (doctor == null) return null;
+
         return new DoctorResponse(
                 doctor.getId(),
                 doctor.getUser(),
                 doctor.getPhone(),
-                doctor.getEmail(),
                 doctor.getSpecialty(),
                 doctor.getConsultations(),
                 doctor.getCrm(),
@@ -45,13 +54,16 @@ public class DoctorConverter {
 
     public Doctor toDomain(DoctorEntity entity) {
         if (entity == null) return null;
+
+        User user = userConverter.toDomain(entity.getUser());
+        Phone phone = phoneConverter.toDomain(entity.getPhone());
+
         return new Doctor(
                 entity.getId(),
-                entity.getUser() != null ? new User(entity.getUser()) : null,
-                null, // Phones tratados separadamente, assumindo OneToMany
-                null, // Email não está presente diretamente na entidade
+                user,
+                phone,
                 entity.getSpecialty(),
-                null, // Consultations idem
+                null,  // consultas ignoradas
                 entity.getCrm(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
@@ -60,14 +72,16 @@ public class DoctorConverter {
 
     public DoctorEntity toEntity(Doctor doctor) {
         if (doctor == null) return null;
+
         DoctorEntity entity = new DoctorEntity();
         entity.setId(doctor.getId());
-        entity.setUser(doctor.getUser() != null ? doctor.getUser().getId() : null);
+        entity.setUser(userConverter.toEntity(doctor.getUser()));
+        entity.setPhone(phoneConverter.toEntity(doctor.getPhone()));
         entity.setSpecialty(doctor.getSpecialty());
         entity.setCrm(doctor.getCrm());
         entity.setCreatedAt(doctor.getCreatedAt());
         entity.setUpdatedAt(doctor.getUpdatedAt());
-        // Phones, Consultations e Diagnostics devem ser mapeados separadamente
+
         return entity;
     }
 

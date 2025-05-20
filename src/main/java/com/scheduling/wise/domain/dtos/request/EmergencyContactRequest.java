@@ -8,7 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class EmergencyContactRequest {
     Long id;
-    Long patientId;
     String contactName;
     Long phoneId;
     RelationshipType relationshipType;

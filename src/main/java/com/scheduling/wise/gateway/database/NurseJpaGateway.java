@@ -4,6 +4,8 @@ import com.scheduling.wise.converter.NurseConverter;
 import com.scheduling.wise.domain.Nurse;
 import com.scheduling.wise.gateway.NurseGateway;
 import com.scheduling.wise.gateway.database.entities.NurseEntity;
+import com.scheduling.wise.gateway.database.entities.PhoneEntity;
+import com.scheduling.wise.gateway.database.entities.UserEntity;
 import com.scheduling.wise.gateway.database.repositories.NurseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -19,8 +21,11 @@ public class NurseJpaGateway implements NurseGateway {
 
 
     @Override
-    public void save(Nurse nurse) {
-        repository.save(converter.toEntity(nurse));
+    public void save(Nurse nurse, PhoneEntity phoneEntity, UserEntity userEntity) {
+        NurseEntity nurseEntity = converter.toEntity(nurse);
+        nurseEntity.setPhone(phoneEntity);
+        nurseEntity.setUser(userEntity);
+        repository.save(nurseEntity);
     }
 
     @Override
@@ -42,7 +47,7 @@ public class NurseJpaGateway implements NurseGateway {
 
         nurseEntity.setAreaOfWork(newNurseEntity.getAreaOfWork());
         nurseEntity.setConsultation(newNurseEntity.getConsultation());
-        nurseEntity.setPhones(newNurseEntity.getPhones());
+        nurseEntity.setPhone(newNurseEntity.getPhone());
         repository.save(nurseEntity);
     }
 

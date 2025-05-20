@@ -2,6 +2,7 @@ package com.scheduling.wise.usecase.user;
 
 import com.scheduling.wise.domain.User;
 import com.scheduling.wise.gateway.UserGateway;
+import com.scheduling.wise.gateway.database.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class CreateUserUseCase {
     private final UserGateway userGateway;
 
-    public void execute(User user) {
+    public UserEntity execute(User user) {
         user.activateUser(true);
-        userGateway.save(user);
+        return userGateway.save(user);
     }
 }

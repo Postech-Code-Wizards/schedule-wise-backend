@@ -50,8 +50,6 @@ public class SymptomConverter {
         SymptomEntity entity = new SymptomEntity();
         entity.setId(domain.getId());
         entity.setName(domain.getName());
-        // createdAt e updatedAt são gerenciados pelo Hibernate, não setar aqui
-        // diagnostic deve ser setado externamente no serviço
 
         return entity;
     }

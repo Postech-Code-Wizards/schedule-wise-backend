@@ -13,6 +13,4 @@ public class DiagnosticRequest {
     Long patientId;
     Long doctorId;
     List<Long> symptoms;
-    Long prescriptionDetailsIs;
-
 }

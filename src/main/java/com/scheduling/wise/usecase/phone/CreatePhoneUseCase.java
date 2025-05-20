@@ -2,6 +2,7 @@ package com.scheduling.wise.usecase.phone;
 
 import com.scheduling.wise.domain.Phone;
 import com.scheduling.wise.gateway.PhoneGateway;
+import com.scheduling.wise.gateway.database.entities.PhoneEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class CreatePhoneUseCase {
     private final PhoneGateway phoneGateway;
 
-    public void execute(Phone phone) {
-        phoneGateway.save(phone);
+    public PhoneEntity execute(Phone phone) {
+        return phoneGateway.save(phone);
     }
 }

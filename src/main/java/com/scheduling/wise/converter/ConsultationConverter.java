@@ -1,16 +1,10 @@
 package com.scheduling.wise.converter;
 
-import com.scheduling.wise.domain.Consultation;
-import com.scheduling.wise.domain.Doctor;
-import com.scheduling.wise.domain.Nurse;
-import com.scheduling.wise.domain.Patient;
+import com.scheduling.wise.domain.*;
 import com.scheduling.wise.domain.dtos.request.ConsultationRequest;
 import com.scheduling.wise.domain.dtos.response.ConsultationResponse;
 import com.scheduling.wise.domain.enums.Status;
-import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
-import com.scheduling.wise.gateway.database.entities.DoctorEntity;
-import com.scheduling.wise.gateway.database.entities.NurseEntity;
-import com.scheduling.wise.gateway.database.entities.PatientEntity;
+import com.scheduling.wise.gateway.database.entities.*;
 import com.scheduling.wise.gateway.database.entities.proceduresdtos.ConsultationSummaryDTO;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +13,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class ConsultationConverter {
+
     public Consultation toDomain(ConsultationRequest request) {
         if (request == null) return null;
+
+        List<Diagnostic> diagnostics = request.getDiagnostics() != null
+                ? request.getDiagnostics().stream().map(Diagnostic::new).toList()
+                : null;
 
         return new Consultation(
                 request.getId(),
@@ -28,6 +27,7 @@ public class ConsultationConverter {
                 new Doctor(request.getDoctorId()),
                 new Nurse(request.getNurseId()),
                 request.getStatus(),
+                diagnostics,
                 request.getScheduledAt(),
                 request.getCreatedAt(),
                 request.getUpdatedAt(),
@@ -44,6 +44,7 @@ public class ConsultationConverter {
                 consultation.getDoctor(),
                 consultation.getNurse(),
                 consultation.getStatus(),
+                consultation.getDiagnostics(),
                 consultation.getScheduledAt(),
                 consultation.getCreatedAt(),
                 consultation.getUpdatedAt(),
@@ -54,12 +55,19 @@ public class ConsultationConverter {
     public Consultation toDomain(ConsultationEntity entity) {
         if (entity == null) return null;
 
+        List<Diagnostic> diagnostics = entity.getDiagnostics() != null
+                ? entity.getDiagnostics().stream()
+                .map(d -> new Diagnostic(d.getId()))
+                .toList()
+                : null;
+
         return new Consultation(
                 entity.getId(),
                 entity.getPatient() != null ? new Patient(entity.getPatient().getId()) : null,
                 entity.getDoctor() != null ? new Doctor(entity.getDoctor().getId()) : null,
                 entity.getNurse() != null ? new Nurse(entity.getNurse().getId()) : null,
                 entity.getStatus(),
+                diagnostics,
                 entity.getScheduledAt(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt(),
@@ -73,17 +81,23 @@ public class ConsultationConverter {
         ConsultationEntity entity = new ConsultationEntity();
         entity.setId(consultation.getId());
 
-        entity.setPatient(consultation.getPatient() != null ? new PatientEntity() {{
-            setId(consultation.getPatient().getId());
-        }} : null);
+        if (consultation.getPatient() != null) {
+            PatientEntity patientEntity = new PatientEntity();
+            patientEntity.setId(consultation.getPatient().getId());
+            entity.setPatient(patientEntity);
+        }
 
-        entity.setDoctor(consultation.getDoctor() != null ? new DoctorEntity() {{
-            setId(consultation.getDoctor().getId());
-        }} : null);
+        if (consultation.getDoctor() != null) {
+            DoctorEntity doctorEntity = new DoctorEntity();
+            doctorEntity.setId(consultation.getDoctor().getId());
+            entity.setDoctor(doctorEntity);
+        }
 
-        entity.setNurse(consultation.getNurse() != null ? new NurseEntity() {{
-            setId(consultation.getNurse().getId());
-        }} : null);
+        if (consultation.getNurse() != null) {
+            NurseEntity nurseEntity = new NurseEntity();
+            nurseEntity.setId(consultation.getNurse().getId());
+            entity.setNurse(nurseEntity);
+        }
 
         entity.setStatus(consultation.getStatus());
         entity.setScheduledAt(consultation.getScheduledAt());
@@ -91,7 +105,15 @@ public class ConsultationConverter {
         entity.setUpdatedAt(consultation.getUpdatedAt());
         entity.setCompletedAt(consultation.getCompletedAt());
 
-        // Ignorando lista de diagnostics aqui, porque geralmente isso é manipulado em outro nível
+        if (consultation.getDiagnostics() != null) {
+            List<DiagnosticEntity> diagnosticEntities = consultation.getDiagnostics().stream().map(diagnostic -> {
+                DiagnosticEntity diagnosticEntity = new DiagnosticEntity();
+                diagnosticEntity.setId(diagnostic.getId());
+                diagnosticEntity.setConsultation(entity);
+                return diagnosticEntity;
+            }).toList();
+            entity.setDiagnostics(diagnosticEntities);
+        }
 
         return entity;
     }
@@ -104,7 +126,8 @@ public class ConsultationConverter {
                 new Patient(dto.getPatientId()),
                 new Doctor(dto.getDoctorId()),
                 new Nurse(dto.getNurseId()),
-                Status.valueOf(dto.getStatus()),  // converte String para enum
+                Status.valueOf(dto.getStatus()),
+                null,
                 dto.getScheduledAt(),
                 dto.getCreatedAt(),
                 dto.getUpdatedAt(),

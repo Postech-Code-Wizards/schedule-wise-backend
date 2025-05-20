@@ -91,10 +91,11 @@ type Symptom {
 
 type PrescriptionDetails {
     id: ID!
+    diagnostic: Diagnostic
     medicationName: String
     dosage: String
     frequency: String
-    administrationForm: String
+    routeOfAdministration: String
     instructions: String
     followUpDate: String
     createdAt: String

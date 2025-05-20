@@ -18,7 +18,6 @@ public class Diagnostic {
     private Patient patient;
     private Doctor doctor;
     private List<Symptom> symptoms;
-    private PrescriptionDetails prescriptionDetails;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 

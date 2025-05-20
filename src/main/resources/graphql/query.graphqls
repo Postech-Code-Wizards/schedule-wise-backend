@@ -1,14 +1,9 @@
 type Query {
-    getUserById(id: ID!): User
-
     getConsultationById(id: ID!): Consultation
     getConsultations(id: ID!): [Consultation]
 
     getDiagnosticById(id: ID!): Diagnostic
     getDiagnostics(id: ID!): [Diagnostic]
-
-    getPrescriptionDetailsById(id: ID!): Diagnostic
-    getAllPrescriptionsDetails(id: ID!): [Diagnostic]
 
     getDoctorById(id: ID!): Doctor
     getDoctors: [Doctor]
@@ -19,54 +14,26 @@ type Query {
     getPatientById(id: ID!): Patient
     getPatients: [Patient]
 
-    getPhoneById(id: ID!): Phone
-    getPhones: [Phone]
-
-    getEmergencyContactById(id: ID!): EmergencyContact
-    getEmergencyContacts: [EmergencyContact]
-
-    getSymptomById(id: ID!): Symptom
-    getSymptoms(id: ID!): [Symptom]
 }
 
 type Mutation {
-    createUser(input: UserInput!): User
-    updateUser(id: ID!, input: UserUpdateInput!): User
-    deleteUser(input: ID!): Boolean
-
-    createConsultation(input: ConsultationInput!): Consultation
-    updateConsultation(input: ConsultationUpdateInput!): Consultation
+    createConsultation(input: ConsultationInput!): Boolean
+    updateConsultation(input: ConsultationUpdateInput!): Boolean
     deleteConsultation(id: ID!): Boolean
 
-    createDiagnostic(input: DiagnosticInput!): Diagnostic
-    updateDiagnostic(input: DiagnosticUpdateInput!): Diagnostic
+    createDiagnostic(input: CreateDiagnosticInput!): Boolean
+    updateDiagnostic(input: DiagnosticUpdateInput!): Boolean
     deleteDiagnostic(id: ID!): Boolean
 
-    createPrescription(input: PrescriptionDetailsInput!): PrescriptionDetails
-    updatePrescription(input: PrescriptionDetailsUpdateInput!): PrescriptionDetails
-    deletePrescription(id: ID!): Boolean
-
-    createDoctor(input: DoctorInput!): Doctor
-    updateDoctor(id: ID!, input: DoctorUpdateInput!): Doctor
+    createDoctor(input: DoctorInput!, userInput: UserInput!, phoneInput: PhoneInput!): Boolean
+    updateDoctor(id: ID!, input: DoctorUpdateInput!, userInput: UserInput!): Boolean
     deleteDoctor(id: ID!): Boolean
 
-    createPatient(input: PatientInput!): Patient
-    updatePatient(id: ID!, input: PatientUpdateInput!): Patient
+    createPatient(input: PatientInput!, userInput: UserInput!, emergencyContactInput: EmergencyContactInput!, phoneInput: PhoneInput!, emergencyContactPhone: EmergencyContactPhoneInput!): Boolean
+    updatePatient(id: ID!, input: PatientUpdateInput!, userInput: UserInput!, emergencyContactInput: EmergencyContactInput!): Boolean
     deletePatient(id: ID!): Boolean
 
-    createNurse(input: NurseInput!): Nurse
-    updateNurse(id: ID!, input: NurseUpdateInput!): Nurse
+    createNurse(input: NurseInput!, userInput: UserInput!, phoneInput: PhoneInput!): Boolean
+    updateNurse(id: ID!, input: NurseUpdateInput!, userInput: UserInput!): Boolean
     deleteNurse(id: ID!): Boolean
-
-    createEmergencyContact(input: EmergencyContactInput): EmergencyContact
-    updateEmergencyContact(id: ID!, input: EmergencyContactUpdateInput!): EmergencyContact
-    deleteEmergencyContact(input: ID!): Boolean
-
-    createPhone(input: PhoneInput): Phone
-    updatePhone(id: ID!, input: PhoneUpdateInput!): Phone
-    deletePhone(input: ID!): Boolean
-
-    createSymptom(input: SymptomInput): Symptom
-    updateSymptom(id: ID!, input: SymptomUpdateInput!): Symptom
-    deleteSymptom(input: ID!): Boolean
 }

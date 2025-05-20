@@ -12,9 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class DoctorRequest {
     Long id;
-    Long userId;
-    Long phoneId;
-    String email;
+    Long user;
+    Long phone;
     Specialty specialty;
     List<Consultation> consultations;
     String crm;

@@ -14,7 +14,6 @@ public class DiagnosticsResponse {
     Patient patient;
     Doctor doctor;
     Symptom symptom;
-    PrescriptionDetails prescriptionDetails;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;
 

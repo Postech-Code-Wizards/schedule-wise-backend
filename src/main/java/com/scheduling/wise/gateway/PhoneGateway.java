@@ -1,11 +1,12 @@
 package com.scheduling.wise.gateway;
 
 import com.scheduling.wise.domain.Phone;
+import com.scheduling.wise.gateway.database.entities.PhoneEntity;
 
 import java.util.List;
 
 public interface PhoneGateway {
-    void save(Phone phone);
+    PhoneEntity save(Phone phone);
 
     List<Phone> getAll();
 

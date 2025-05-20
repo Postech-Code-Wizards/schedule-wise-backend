@@ -1,6 +1,7 @@
 package com.scheduling.wise.usecase.user;
 
 import com.scheduling.wise.gateway.UserGateway;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

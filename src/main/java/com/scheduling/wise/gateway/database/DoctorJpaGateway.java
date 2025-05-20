@@ -3,6 +3,9 @@ package com.scheduling.wise.gateway.database;
 import com.scheduling.wise.converter.DoctorConverter;
 import com.scheduling.wise.domain.Doctor;
 import com.scheduling.wise.gateway.DoctorGateway;
+import com.scheduling.wise.gateway.database.entities.DoctorEntity;
+import com.scheduling.wise.gateway.database.entities.PhoneEntity;
+import com.scheduling.wise.gateway.database.entities.UserEntity;
 import com.scheduling.wise.gateway.database.repositories.DoctorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,11 @@ public class DoctorJpaGateway implements DoctorGateway {
     private final DoctorRepository doctorRepository;
 
     @Override
-    public void save(Doctor doctor) {
-        doctorRepository.save(converter.toEntity(doctor));
+    public void save(Doctor doctor, PhoneEntity phoneEntity, UserEntity userEntity) {
+        DoctorEntity doctorEntity = converter.toEntity(doctor);
+        doctorEntity.setPhone(phoneEntity);
+        doctorEntity.setUser(userEntity);
+        doctorRepository.save(doctorEntity);
     }
 
     @Override
@@ -38,7 +44,7 @@ public class DoctorJpaGateway implements DoctorGateway {
         var newDoctorEntity = converter.toEntity(newDoctor);
         doctor.setConsultation(newDoctorEntity.getConsultation());
         doctor.setCrm(newDoctorEntity.getCrm());
-        doctor.setPhones(newDoctorEntity.getPhones());
+        doctor.setPhone(newDoctorEntity.getPhone());
         doctor.setDiagnostics(newDoctorEntity.getDiagnostics());
         doctor.setSpecialty(newDoctorEntity.getSpecialty());
         doctorRepository.save(doctor);

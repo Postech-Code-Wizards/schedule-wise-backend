@@ -3,7 +3,10 @@ package com.scheduling.wise.gateway.database;
 import com.scheduling.wise.converter.PatientConverter;
 import com.scheduling.wise.domain.Patient;
 import com.scheduling.wise.gateway.PatientGateway;
+import com.scheduling.wise.gateway.database.entities.EmergencyContactEntity;
 import com.scheduling.wise.gateway.database.entities.PatientEntity;
+import com.scheduling.wise.gateway.database.entities.PhoneEntity;
+import com.scheduling.wise.gateway.database.entities.UserEntity;
 import com.scheduling.wise.gateway.database.repositories.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -18,8 +21,12 @@ public class PatientJpaGateway implements PatientGateway {
     private final PatientConverter converter;
 
     @Override
-    public void save(Patient patient) {
-        repository.save(converter.toEntity(patient));
+    public void save(Patient patient, PhoneEntity phoneEntity, UserEntity userEntity, EmergencyContactEntity emergencyContactEntity) {
+        PatientEntity patientEntity = converter.toEntity(patient);
+        patientEntity.setPhone(phoneEntity);
+        patientEntity.setUser(userEntity);
+        patientEntity.setEmergencyContact(emergencyContactEntity);
+        repository.save(patientEntity);
     }
 
     @Override
@@ -40,7 +47,7 @@ public class PatientJpaGateway implements PatientGateway {
         PatientEntity patientEntity = converter.toEntity(getById(id));
 
         patientEntity.setConsultations(newPatientEntity.getConsultations());
-        patientEntity.setPhones(newPatientEntity.getPhones());
+        patientEntity.setPhone(newPatientEntity.getPhone());
         patientEntity.setDiagnostics(newPatientEntity.getDiagnostics());
         patientEntity.setDateOfBirth(newPatientEntity.getDateOfBirth());
         patientEntity.setEmergencyContact(newPatientEntity.getEmergencyContact());

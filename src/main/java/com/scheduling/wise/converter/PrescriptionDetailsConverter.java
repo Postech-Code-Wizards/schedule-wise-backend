@@ -70,8 +70,6 @@ public class PrescriptionDetailsConverter {
         entity.setRouteOfAdministration(domain.getRouteOfAdministration());
         entity.setInstructions(domain.getInstructions());
         entity.setFollowUpDate(domain.getFollowUpDate());
-        // createdAt e updatedAt são controlados pelo Hibernate, não setar aqui
-        // diagnostic deve ser setado externamente no serviço, porque precisa do contexto
 
         return entity;
     }

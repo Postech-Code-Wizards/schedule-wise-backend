@@ -16,7 +16,6 @@ public class DoctorResponse {
     Long id;
     User user;
     Phone phone;
-    String email;
     Specialty specialty;
     List<Consultation> consultations;
     String crm;

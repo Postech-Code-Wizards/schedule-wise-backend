@@ -1,16 +1,16 @@
 input ConsultationInput {
     patientId: ID!
     doctorId: ID!
-    nurseId: ID
+    nurseId: ID!
     status: Status!
     scheduledAt: String!
 }
 
 input ConsultationUpdateInput {
-    doctorId: ID
-    nurseId: ID
+    doctorId: ID!
+    nurseId: ID!
     status: Status
-    scheduledAt: String
+    scheduledAt: String!
     completedAt: String
 }
 
@@ -18,14 +18,12 @@ input DiagnosticInput {
     consultationId: ID!
     patientId: ID!
     doctorId: ID!
-    symptomId: ID!
-    prescriptionDetails: PrescriptionDetailsInput!
 }
 
 input DiagnosticUpdateInput {
     patientId: ID!
     doctorId: ID!
-    symptomId: ID!
+    symptomId: ID
     prescriptionDetails: PrescriptionDetailsInput!
 }
 
@@ -33,27 +31,24 @@ input PrescriptionDetailsInput {
     medicationName: String!
     dosage: String!
     frequency: String!
-    administrationForm: String!
-    instructions: String!
+    routeOfAdministration: String!
+    instructions: String
     followUpDate: String
 }
 
 input PrescriptionDetailsUpdateInput {
-    medicationName: String!
-    dosage: String!
-    frequency: String!
-    administrationForm: String!
+    medicationName: String
+    diagnostic: ID
+    dosage: String
+    frequency: String
+    routeOfAdministration: String
     instructions: String!
     followUpDate: String
 }
 
 input DoctorInput {
-    id: ID!
-    user: ID!
-    phone: ID!
-    email: String
-    specialty: Specialty
-    crm: String
+    specialty: Specialty!
+    crm: String!
 }
 
 input DoctorUpdateInput {
@@ -65,54 +60,50 @@ input DoctorUpdateInput {
 }
 
 input PatientInput {
-    id: ID!
-    user: ID!
-    emergencyContact: ID!
-    phone: ID!
-    dateOfBirth: String
+    dateOfBirth: String!
 }
 
 input PatientUpdateInput {
-    user: ID!
-    emergencyContact: ID!
-    phone: ID!
+    user: ID
+    emergencyContact: ID
+    phone: ID
     dateOfBirth: String
 }
 
 input NurseInput {
-    id: ID!
-    user: ID!
-    phone: ID!
-    areaOfWork: AreaOfWork
+    areaOfWork: AreaOfWork!
 }
 
 input NurseUpdateInput {
-    user: ID!
-    phone: ID!
+    user: ID
+    phone: ID
     areaOfWork: AreaOfWork
 }
 
 input EmergencyContactInput {
-    id: ID!
-    patient: ID!
-    contactName: String
-    phone: PhoneInput
-    relationshipType: RelationshipType
+    contactName: String!
+    relationshipType: RelationshipType!
 }
 
 input EmergencyContactUpdateInput {
-    patient: ID!
+    patient: ID
     contactName: String
     phone: PhoneInput
     relationshipType: RelationshipType
 }
 
 input PhoneInput {
-    id: ID!
-    areaCode: String
-    phoneNumber: String
-    phoneType: PhoneType
-    operator: String
+    areaCode: String!
+    phoneNumber: String!
+    phoneType: PhoneType!
+    operator: String!
+}
+
+input EmergencyContactPhoneInput {
+    areaCode: String!
+    phoneNumber: String!
+    phoneType: PhoneType!
+    operator: String!
 }
 
 input PhoneUpdateInput {
@@ -123,12 +114,17 @@ input PhoneUpdateInput {
 }
 
 input SymptomInput {
-    id: ID!
-    name: String
+    name: String!
 }
 
 input SymptomUpdateInput {
     name: String!
+}
+
+input CreateDiagnosticInput {
+    diagnostic: DiagnosticInput!
+    symptomInput: [SymptomInput!]!
+    prescriptionDetails: [PrescriptionDetailsInput!]!
 }
 
 input UserInput {

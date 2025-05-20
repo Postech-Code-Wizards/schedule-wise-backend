@@ -5,29 +5,30 @@ import com.scheduling.wise.domain.Phone;
 import com.scheduling.wise.domain.User;
 import com.scheduling.wise.domain.dtos.request.NurseRequest;
 import com.scheduling.wise.domain.dtos.response.NurseResponse;
-import com.scheduling.wise.domain.dtos.response.PhoneResponse;
 import com.scheduling.wise.gateway.database.entities.NurseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class NurseConverter {
+
+    private final UserConverter userConverter;
+    private final PhoneConverter phoneConverter;
+
     public Nurse toDomain(NurseRequest request) {
         if (request == null) return null;
 
-        List<Phone> phones = null;
-        if (request.getPhoneIds() != null) {
-            phones = request.getPhoneIds().stream()
-                    .map(phoneResponse -> new Phone(phoneResponse.getId())) // assumindo PhoneResponse tem id
-                    .collect(Collectors.toList());
-        }
+        User user = request.getUser() != null ? new User(request.getUser()) : null;
+        Phone phone = request.getPhone() != null ? new Phone(request.getPhone()) : null;
 
         return new Nurse(
                 request.getId(),
-                new User(request.getUserId()),
-                phones,
+                user,
+                phone,
                 request.getAreaOfWork(),
                 null,
                 null
@@ -36,10 +37,11 @@ public class NurseConverter {
 
     public NurseResponse toResponse(Nurse nurse) {
         if (nurse == null) return null;
+
         return new NurseResponse(
                 nurse.getId(),
                 nurse.getUser(),
-                nurse.getPhones(),
+                nurse.getPhone(),
                 nurse.getAreaOfWork(),
                 nurse.getCreatedAt(),
                 nurse.getUpdatedAt()
@@ -49,18 +51,13 @@ public class NurseConverter {
     public Nurse toDomain(NurseEntity entity) {
         if (entity == null) return null;
 
-        // Conversão simplificada das phones (PhoneEntity → Phone)
-        List<Phone> phones = null;
-        if (entity.getPhones() != null) {
-            phones = entity.getPhones().stream()
-                    .map(pe -> new Phone(pe.getId()))
-                    .collect(Collectors.toList());
-        }
+        User user = userConverter.toDomain(entity.getUser());
+        Phone phone = phoneConverter.toDomain(entity.getPhone());
 
         return new Nurse(
                 entity.getId(),
-                new User(entity.getUser()),
-                phones,
+                user,
+                phone,
                 entity.getAreaOfWork(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
@@ -69,13 +66,15 @@ public class NurseConverter {
 
     public NurseEntity toEntity(Nurse nurse) {
         if (nurse == null) return null;
+
         NurseEntity entity = new NurseEntity();
         entity.setId(nurse.getId());
-        entity.setUser(nurse.getUser() != null ? nurse.getUser().getId() : null);
+        entity.setUser(userConverter.toEntity(nurse.getUser()));
+        entity.setPhone(phoneConverter.toEntity(nurse.getPhone()));
         entity.setAreaOfWork(nurse.getAreaOfWork());
         entity.setCreatedAt(nurse.getCreatedAt());
         entity.setUpdatedAt(nurse.getUpdatedAt());
-        // Phones e Consultations devem ser mapeados separadamente
+
         return entity;
     }
 

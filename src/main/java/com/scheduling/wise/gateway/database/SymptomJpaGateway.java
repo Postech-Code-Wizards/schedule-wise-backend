@@ -18,8 +18,8 @@ public class SymptomJpaGateway implements SymptomGateway {
     private final SymptomConverter converter;
 
     @Override
-    public void save(Symptom symptom) {
-        repository.save(converter.toEntity(symptom));
+    public SymptomEntity save(Symptom symptom) {
+        return repository.save(converter.toEntity(symptom));
     }
 
     @Override
@@ -40,7 +40,6 @@ public class SymptomJpaGateway implements SymptomGateway {
         SymptomEntity symptomEntity = converter.toEntity(getById(id));
 
         symptomEntity.setName(newSymptomEntity.getName());
-        symptomEntity.setDiagnostic(newSymptomEntity.getDiagnostic());
         repository.save(symptomEntity);
     }
 

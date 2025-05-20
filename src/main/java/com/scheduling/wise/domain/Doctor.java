@@ -17,7 +17,6 @@ public class Doctor {
     private Long id;
     private User user;
     private Phone phone;
-    private String email;
     private Specialty specialty;
     private List<Consultation> consultations;
     private String crm;

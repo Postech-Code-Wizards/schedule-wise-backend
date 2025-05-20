@@ -14,7 +14,7 @@ import java.util.List;
 public class NurseResponse {
     Long id;
     User user;
-    List<Phone> phones;
+    Phone phone;
     AreaOfWork areaOfWork;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;

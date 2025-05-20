@@ -18,8 +18,8 @@ public class PhoneJpaGateway implements PhoneGateway {
     private final PhoneConverter converter;
 
     @Override
-    public void save(Phone phone) {
-        repository.save(converter.toEntity(phone));
+    public PhoneEntity save(Phone phone) {
+        return repository.save(converter.toEntity(phone));
     }
 
     @Override
@@ -39,12 +39,9 @@ public class PhoneJpaGateway implements PhoneGateway {
                 .orElseThrow(() -> new EntityNotFoundException("Phone not found for id " + id));
         PhoneEntity phoneEntity = converter.toEntity(getById(id));
 
-        phoneEntity.setPatient(newPhoneEntity.getPatient());
         phoneEntity.setPhoneNumber(newPhoneEntity.getPhoneNumber());
         phoneEntity.setPhoneType(newPhoneEntity.getPhoneType());
         phoneEntity.setAreaCode(newPhoneEntity.getAreaCode());
-        phoneEntity.setDoctor(newPhoneEntity.getDoctor());
-        phoneEntity.setNurse(newPhoneEntity.getNurse());
         phoneEntity.setOperator(newPhoneEntity.getOperator());
         repository.save(phoneEntity);
     }

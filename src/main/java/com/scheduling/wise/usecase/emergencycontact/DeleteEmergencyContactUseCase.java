@@ -1,6 +1,7 @@
 package com.scheduling.wise.usecase.emergencycontact;
 
 import com.scheduling.wise.gateway.EmergencyContactGateway;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

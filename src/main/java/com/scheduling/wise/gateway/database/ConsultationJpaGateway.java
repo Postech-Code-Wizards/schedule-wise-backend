@@ -3,6 +3,7 @@ package com.scheduling.wise.gateway.database;
 import com.scheduling.wise.controller.exceptions.ConsultationNotFoundException;
 import com.scheduling.wise.converter.ConsultationConverter;
 import com.scheduling.wise.domain.Consultation;
+import com.scheduling.wise.domain.Diagnostic;
 import com.scheduling.wise.gateway.ConsultationGateway;
 import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
 import com.scheduling.wise.gateway.database.entities.proceduresdtos.ConsultationSummaryDTO;
@@ -38,13 +39,28 @@ public class ConsultationJpaGateway implements ConsultationGateway {
     }
 
     @Override
-    public void update(Long id, Consultation consultation) {
+    public void updateCompletion(Long id, Consultation consultation) {
         ConsultationEntity newConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
         ConsultationEntity consultationEntity = converter.toEntity(consultation);
 
         consultationEntity.setCompletedAt(newConsultation.getCompletedAt());
-        consultationEntity.setDiagnostics(newConsultation.getDiagnostics());
+        consultationRepository.save(consultationEntity);
+    }
+
+    @Override
+    public void updateStatus(Long id, Consultation consultation) {
+        ConsultationEntity consultationEntity = converter.toEntity(consultation);
+
         consultationEntity.setStatus(consultationEntity.getStatus());
+        consultationRepository.save(consultationEntity);
+    }
+
+    @Override
+    public void updateDiagnostics(Long id, Consultation consultation, Diagnostic diagnostic) {
+        ConsultationEntity newConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
+        ConsultationEntity consultationEntity = converter.toEntity(consultation);
+
+        consultationEntity.setDiagnostics(newConsultation.getDiagnostics());
         consultationRepository.save(consultationEntity);
     }
 

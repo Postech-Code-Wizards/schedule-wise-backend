@@ -14,7 +14,6 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class EmergencyContact {
     private Long id;
-    private Patient patient;
     private String contactName;
     private Phone phone;
     private RelationshipType relationshipType;

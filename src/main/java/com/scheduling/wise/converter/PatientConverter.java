@@ -14,15 +14,31 @@ import java.util.stream.Collectors;
 
 @Component
 public class PatientConverter {
+
+    private final UserConverter userConverter;
+    private final EmergencyContactConverter emergencyContactConverter;
+    private final PhoneConverter phoneConverter;
+
+    public PatientConverter(UserConverter userConverter,
+                            EmergencyContactConverter emergencyContactConverter,
+                            PhoneConverter phoneConverter) {
+        this.userConverter = userConverter;
+        this.emergencyContactConverter = emergencyContactConverter;
+        this.phoneConverter = phoneConverter;
+    }
+
     public Patient toDomain(PatientRequest request) {
         if (request == null) return null;
 
-        // Phones e EmergencyContact precisam ser carregados externamente (não vêm no request, só ids)
+        User user = request.getUserId() != null ? new User(request.getUserId()) : null;
+        EmergencyContact emergencyContact = request.getEmergencyContactId() != null ? new EmergencyContact(request.getEmergencyContactId()) : null;
+        Phone phone = request.getPhoneId() != null ? new Phone(request.getPhoneId()) : null;
+
         return new Patient(
                 request.getId(),
-                new User(request.getUserId()),
-                new EmergencyContact(request.getEmergencyContactId()),
-                new Phone(request.getPhoneId()),
+                user,
+                emergencyContact,
+                phone,
                 request.getDateOfBirth(),
                 null,
                 null
@@ -46,20 +62,13 @@ public class PatientConverter {
     public Patient toDomain(PatientEntity entity) {
         if (entity == null) return null;
 
-        // Pega primeiro telefone da lista, se existir
-        Phone phone = null;
-        if (entity.getPhones() != null && !entity.getPhones().isEmpty()) {
-            phone = new Phone(entity.getPhones().getFirst().getId());
-        }
-
-        EmergencyContact emergencyContact = null;
-        if (entity.getEmergencyContact() != null) {
-            emergencyContact = new EmergencyContact(entity.getEmergencyContact().getId());
-        }
+        User user = userConverter.toDomain(entity.getUser());
+        EmergencyContact emergencyContact = emergencyContactConverter.toDomain(entity.getEmergencyContact());
+        Phone phone = phoneConverter.toDomain(entity.getPhone());
 
         return new Patient(
                 entity.getId(),
-                new User(entity.getUser()),
+                user,
                 emergencyContact,
                 phone,
                 entity.getDateOfBirth(),
@@ -73,11 +82,13 @@ public class PatientConverter {
 
         PatientEntity entity = new PatientEntity();
         entity.setId(patient.getId());
-        entity.setUser(patient.getUser() != null ? patient.getUser().getId() : null);
+        entity.setUser(userConverter.toEntity(patient.getUser()));
         entity.setDateOfBirth(patient.getDateOfBirth());
         entity.setCreatedAt(patient.getCreatedAt());
         entity.setUpdatedAt(patient.getUpdatedAt());
-        // EmergencyContact, Phones e Consultations são gerenciados separadamente
+        entity.setEmergencyContact(emergencyContactConverter.toEntity(patient.getEmergencyContact()));
+        entity.setPhone(phoneConverter.toEntity(patient.getPhone()));
+
         return entity;
     }
 
