@@ -8,8 +8,6 @@ import com.scheduling.wise.domain.PrescriptionDetails;
 import com.scheduling.wise.domain.Symptom;
 import com.scheduling.wise.domain.dtos.request.CreateDiagnosticInput;
 import com.scheduling.wise.domain.dtos.request.DiagnosticRequest;
-import com.scheduling.wise.domain.dtos.request.PrescriptionDetailsRequest;
-import com.scheduling.wise.domain.dtos.request.SymptomRequest;
 import com.scheduling.wise.domain.dtos.response.DiagnosticsResponse;
 import com.scheduling.wise.usecase.diagnostic.*;
 import lombok.AllArgsConstructor;
