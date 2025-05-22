@@ -17,5 +17,4 @@ public class PrescriptionDetailsResponse {
     ZonedDateTime followUpDate;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;
-
 }

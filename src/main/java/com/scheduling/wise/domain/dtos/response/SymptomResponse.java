@@ -12,5 +12,4 @@ public class SymptomResponse {
     String name;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;
-
 }

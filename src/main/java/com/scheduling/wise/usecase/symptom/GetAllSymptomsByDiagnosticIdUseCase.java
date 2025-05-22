@@ -1,5 +1,6 @@
 package com.scheduling.wise.usecase.symptom;
 
+import com.scheduling.wise.converter.SymptomConverter;
 import com.scheduling.wise.domain.Symptom;
 import com.scheduling.wise.gateway.SymptomGateway;
 import lombok.AllArgsConstructor;
@@ -9,10 +10,12 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class GetSymptomsUseCase {
+public class GetAllSymptomsByDiagnosticIdUseCase {
     private final SymptomGateway symptomGateway;
 
-    public List<Symptom> execute() {
-        return symptomGateway.getAll();
+    private final SymptomConverter converter;
+
+    public List<Symptom> execute(Long diagnosticId) {
+        return converter.toDomain(symptomGateway.getAllByDiagnosticId(diagnosticId));
     }
 }

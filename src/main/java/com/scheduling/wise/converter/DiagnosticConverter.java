@@ -17,19 +17,12 @@ public class DiagnosticConverter {
     public Diagnostic toDomain(DiagnosticRequest request) {
         if (request == null) return null;
 
-        List<Symptom> symptoms = null;
-        if (request.getSymptoms() != null) {
-            symptoms = request.getSymptoms().stream()
-                    .map(Symptom::new)
-                    .collect(Collectors.toList());
-        }
 
         return new Diagnostic(
                 request.getId(),
                 new Consultation(request.getConsultationId()),
                 new Patient(request.getPatientId()),
                 new Doctor(request.getDoctorId()),
-                symptoms,
                 null,
                 null
         );
@@ -38,16 +31,12 @@ public class DiagnosticConverter {
     public DiagnosticsResponse toResponse(Diagnostic diagnostic) {
         if (diagnostic == null) return null;
 
-        Symptom firstSymptom = (diagnostic.getSymptoms() != null && !diagnostic.getSymptoms().isEmpty())
-                ? diagnostic.getSymptoms().getFirst()
-                : null;
 
         return new DiagnosticsResponse(
                 diagnostic.getId(),
                 diagnostic.getConsultation(),
                 diagnostic.getPatient(),
                 diagnostic.getDoctor(),
-                firstSymptom,
                 diagnostic.getCreatedAt(),
                 diagnostic.getUpdatedAt()
         );
@@ -63,7 +52,6 @@ public class DiagnosticConverter {
                 entity.getConsultation() != null ? new Consultation(entity.getConsultation().getId()) : null,
                 entity.getPatient() != null ? new Patient(entity.getPatient().getId()) : null,
                 entity.getDoctor() != null ? new Doctor(entity.getDoctor().getId()) : null,
-                symptoms,
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );

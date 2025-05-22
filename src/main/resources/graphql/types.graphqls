@@ -10,15 +10,19 @@ type Consultation {
     completedAt: String
 }
 
-type Diagnostic {
+type DiagnosticsResponse {
     id: ID!
     consultation: Consultation
     patient: Patient
     doctor: Doctor
-    symptom: Symptom
-    prescriptionDetails: PrescriptionDetails
     createdAt: String
     updatedAt: String
+}
+
+type DiagnosticSymptomPrescriptionResponse  {
+    diagnostic: DiagnosticsResponse
+    symptom: [Symptom]
+    prescriptionDetails: [PrescriptionDetails]
 }
 
 type Doctor {
@@ -91,7 +95,6 @@ type Symptom {
 
 type PrescriptionDetails {
     id: ID!
-    diagnostic: Diagnostic
     medicationName: String
     dosage: String
     frequency: String

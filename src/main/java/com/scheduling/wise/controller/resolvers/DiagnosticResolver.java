@@ -6,12 +6,14 @@ import com.scheduling.wise.converter.SymptomConverter;
 import com.scheduling.wise.domain.Diagnostic;
 import com.scheduling.wise.domain.PrescriptionDetails;
 import com.scheduling.wise.domain.Symptom;
-import com.scheduling.wise.domain.dtos.request.CreateDiagnosticInput;
-import com.scheduling.wise.domain.dtos.request.DiagnosticRequest;
-import com.scheduling.wise.domain.dtos.request.PrescriptionDetailsRequest;
-import com.scheduling.wise.domain.dtos.request.SymptomRequest;
+import com.scheduling.wise.domain.dtos.request.*;
+import com.scheduling.wise.domain.dtos.response.DiagnosticSymptomPrescriptionResponse;
 import com.scheduling.wise.domain.dtos.response.DiagnosticsResponse;
+import com.scheduling.wise.domain.dtos.response.PrescriptionDetailsResponse;
+import com.scheduling.wise.domain.dtos.response.SymptomResponse;
 import com.scheduling.wise.usecase.diagnostic.*;
+import com.scheduling.wise.usecase.prescriptiondetails.GetAllPrescriptionDetailsUseCase;
+import com.scheduling.wise.usecase.symptom.GetAllSymptomsByDiagnosticIdUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -28,6 +30,8 @@ public class DiagnosticResolver {
     private final GetAllDiagnosticUseCase getAllDiagnosticUseCase;
     private final UpdateDiagnosticUseCase updateDiagnosticUseCase;
     private final DeleteDiagnosticUseCase deleteDiagnosticUseCase;
+    private final GetAllSymptomsByDiagnosticIdUseCase getAllSymptomsByDiagnosticIdUseCase;
+    private final GetAllPrescriptionDetailsUseCase getAllPrescriptionDetailsUseCase;
 
     private final DiagnosticConverter diagnosticConverter;
     private final SymptomConverter symptomConverter;
@@ -43,22 +47,32 @@ public class DiagnosticResolver {
     }
 
     @QueryMapping
-    public DiagnosticsResponse getDiagnosticById(@Argument("id") Long id) {
+    public DiagnosticSymptomPrescriptionResponse getDiagnosticById(@Argument("id") Long id) {
         var domain = getDiagnosticUseCase.execute(id);
-        return diagnosticConverter.toResponse(domain);
+        var symptom = getAllSymptomsByDiagnosticIdUseCase.execute(id);
+        var prescriptionDetails = getAllPrescriptionDetailsUseCase.execute(id);
+
+        DiagnosticsResponse diagnosticsResponse = diagnosticConverter.toResponse(domain);
+        List<SymptomResponse> symptomResponseList = symptomConverter.toResponse(symptom);
+        List<PrescriptionDetailsResponse> prescriptionDetailsResponseList = prescriptionDetailsConverter.toResponse(prescriptionDetails);
+
+        return new DiagnosticSymptomPrescriptionResponse(diagnosticsResponse, symptomResponseList, prescriptionDetailsResponseList);
     }
 
     @QueryMapping
-    public List<DiagnosticsResponse> getConsultationDiagnostics(@Argument("id") Long consultationId) {
+    public List<DiagnosticsResponse> getDiagnosticsByConsultationId(@Argument("id") Long consultationId) {
         var domain = getAllDiagnosticUseCase.execute(consultationId);
         return diagnosticConverter.toResponse(domain);
     }
 
     @MutationMapping
     public void updateDiagnostic(@Argument("id") Long id,
-                                 @Argument("input") DiagnosticRequest diagnosticRequest) {
-        Diagnostic domain = diagnosticConverter.toDomain(diagnosticRequest);
-        updateDiagnosticUseCase.execute(id, domain);
+                                 @Argument("input") UpdateDiagnosticInput updateDiagnosticInput) {
+
+        List<Symptom> symptoms = updateDiagnosticInput.getSymptomInput().stream().map(symptomConverter::toDomain).toList();
+        List<PrescriptionDetails> prescriptionDetails = updateDiagnosticInput.getPrescriptionDetails().stream().map(prescriptionDetailsConverter::toDomain).toList();
+        Diagnostic domain = diagnosticConverter.toDomain(updateDiagnosticInput.getDiagnostic());
+        updateDiagnosticUseCase.execute(id, domain, symptoms, prescriptionDetails);
     }
 
     @MutationMapping

@@ -8,5 +8,4 @@ import lombok.Data;
 public class SymptomRequest {
     Long id;
     String name;
-
 }

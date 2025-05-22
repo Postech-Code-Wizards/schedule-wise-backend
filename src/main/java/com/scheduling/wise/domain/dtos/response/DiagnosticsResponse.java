@@ -13,7 +13,6 @@ public class DiagnosticsResponse {
     Consultation consultation;
     Patient patient;
     Doctor doctor;
-    Symptom symptom;
     ZonedDateTime createdAt;
     ZonedDateTime updatedAt;
 

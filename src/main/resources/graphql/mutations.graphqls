@@ -127,6 +127,12 @@ input CreateDiagnosticInput {
     prescriptionDetails: [PrescriptionDetailsInput!]!
 }
 
+input UpdateDiagnosticInput {
+    diagnostic: DiagnosticInput!
+    symptomInput: [SymptomInput!]!
+    prescriptionDetails: [PrescriptionDetailsInput!]!
+}
+
 input UserInput {
     email: String!
     password: String!

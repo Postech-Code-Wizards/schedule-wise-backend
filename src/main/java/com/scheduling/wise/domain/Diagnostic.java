@@ -17,7 +17,6 @@ public class Diagnostic {
     private Consultation consultation;
     private Patient patient;
     private Doctor doctor;
-    private List<Symptom> symptoms;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
 

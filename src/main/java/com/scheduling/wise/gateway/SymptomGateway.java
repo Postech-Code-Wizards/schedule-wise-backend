@@ -6,13 +6,9 @@ import com.scheduling.wise.gateway.database.entities.SymptomEntity;
 import java.util.List;
 
 public interface SymptomGateway {
-    SymptomEntity save(Symptom symptom);
+    void save(SymptomEntity symptomEntity);
 
-    List<Symptom> getAll();
+    List<SymptomEntity> getAllByDiagnosticId(Long id);
 
-    Symptom getById(Long id);
-
-    void update(Long id, Symptom symptom);
-
-    void delete(Long id);
+    void deleteAll(List<SymptomEntity> symptomEntityList);
 }

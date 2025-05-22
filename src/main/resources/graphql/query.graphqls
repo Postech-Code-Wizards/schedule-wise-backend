@@ -2,8 +2,8 @@ type Query {
     getConsultationById(id: ID!): Consultation
     getConsultations(id: ID!): [Consultation]
 
-    getDiagnosticById(id: ID!): Diagnostic
-    getDiagnostics(id: ID!): [Diagnostic]
+    getDiagnosticById(id: ID!): DiagnosticSymptomPrescriptionResponse
+    getDiagnosticsByConsultationId(id: ID!): [DiagnosticsResponse]
 
     getDoctorById(id: ID!): Doctor
     getDoctors: [Doctor]
@@ -22,7 +22,7 @@ type Mutation {
     deleteConsultation(id: ID!): Boolean
 
     createDiagnostic(input: CreateDiagnosticInput!): Boolean
-    updateDiagnostic(input: DiagnosticUpdateInput!): Boolean
+    updateDiagnostic(id:ID!, input: UpdateDiagnosticInput!): Boolean
     deleteDiagnostic(id: ID!): Boolean
 
     createDoctor(input: DoctorInput!, userInput: UserInput!, phoneInput: PhoneInput!): Boolean

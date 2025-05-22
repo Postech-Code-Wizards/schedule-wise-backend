@@ -6,13 +6,10 @@ import com.scheduling.wise.gateway.database.entities.PrescriptionDetailsEntity;
 import java.util.List;
 
 public interface PrescriptionDetailsGateway {
-    PrescriptionDetailsEntity save(PrescriptionDetails prescriptionDetails);
 
-    List<PrescriptionDetails> getAll();
+    void save(PrescriptionDetails prescriptionDetails);
 
-    PrescriptionDetails getById(Long id);
+    List<PrescriptionDetailsEntity> getAllByDiagnosticId(Long id);
 
-    void update(Long id, PrescriptionDetails prescriptionDetails);
-
-    void delete(Long id);
+    void deleteAll(List<PrescriptionDetailsEntity> prescriptionDetailsEntityList);
 }
