@@ -6,7 +6,6 @@ import com.scheduling.wise.gateway.EmergencyContactGateway;
 import com.scheduling.wise.gateway.database.entities.EmergencyContactEntity;
 import com.scheduling.wise.gateway.database.entities.PhoneEntity;
 import com.scheduling.wise.usecase.phone.CreatePhoneUseCase;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

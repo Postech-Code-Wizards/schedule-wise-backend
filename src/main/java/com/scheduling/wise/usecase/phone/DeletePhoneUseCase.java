@@ -1,7 +1,6 @@
 package com.scheduling.wise.usecase.phone;
 
 import com.scheduling.wise.gateway.PhoneGateway;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
