@@ -2,16 +2,12 @@ package com.scheduling.wise.usecase.consultation;
 
 import com.scheduling.wise.domain.Consultation;
 import com.scheduling.wise.domain.Diagnostic;
-import com.scheduling.wise.domain.Symptom;
 import com.scheduling.wise.domain.enums.Status;
 import com.scheduling.wise.gateway.ConsultationGateway;
 import com.scheduling.wise.gateway.messaging.message.PreviousConsultationsRequest;
 import com.scheduling.wise.gateway.messaging.publisher.HistoryProducerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -29,13 +25,13 @@ public class UpdateConsultationStatusUseCase {
         Long symptomId = null;
 
         if (consultation.getDiagnostics() != null && !consultation.getDiagnostics().isEmpty()) {
-            Diagnostic firstDiagnostic = consultation.getDiagnostics().get(0);
+            Diagnostic firstDiagnostic = consultation.getDiagnostics().getFirst();
             diagnosticId = firstDiagnostic.getId();
 
-            if (firstDiagnostic.getSymptoms() != null && !firstDiagnostic.getSymptoms().isEmpty()) {
-                Symptom firstSymptom = firstDiagnostic.getSymptoms().get(0);
-                symptomId = firstSymptom.getId();
-            }
+//            if (firstDiagnostic.getSymptoms() != null && !firstDiagnostic.getSymptoms().isEmpty()) {
+//                Symptom firstSymptom = firstDiagnostic.getSymptoms().get(0);
+//                symptomId = firstSymptom.getId();
+//            }
         }
 
         return PreviousConsultationsRequest.builder()

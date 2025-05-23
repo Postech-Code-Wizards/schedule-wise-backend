@@ -10,46 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
 
-@NamedStoredProcedureQuery(
-        name = "ConsultationEntity.getFutureConsultations",
-        procedureName = "get_future_consultations",
-        resultSetMappings = "ConsultationMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_patient_id", type = Long.class)
-        }
-)
-@NamedStoredProcedureQuery(
-        name = "ConsultationEntity.getPatientConsultationHistory",
-        procedureName = "get_patient_consultation_history",
-        resultSetMappings = "ConsultationMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_patient_id", type = Long.class)
-        }
-)
-@SqlResultSetMapping(
-        name = "ConsultationMapping",
-        classes = @ConstructorResult(
-                targetClass = com.scheduling.wise.gateway.database.entities.proceduresdtos.ConsultationSummaryDTO.class,
-                columns = {
-                        @ColumnResult(name = "consultation_id", type = Long.class),
-                        @ColumnResult(name = "doctor_id", type = Long.class),
-                        @ColumnResult(name = "nurse_id", type = Long.class),
-                        @ColumnResult(name = "status", type = String.class),
-                        @ColumnResult(name = "scheduled_at", type = ZonedDateTime.class),
-                        @ColumnResult(name = "completed_at", type = ZonedDateTime.class)
-                }
-        )
-)
-
 @Entity
-@Table(
-        name = "diagnostic",
-        indexes = {
-                @Index(name = "idx_consultation_patient_id", columnList = "patient_id"),
-                @Index(name = "idx_consultation_scheduled_at", columnList = "scheduled_at"),
-                @Index(name = "idx_consultation_status", columnList = "status")
-        }
-)
+@Table(name = "diagnostic")
 @Getter
 @Setter
 @AllArgsConstructor

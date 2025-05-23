@@ -5,7 +5,6 @@ import com.scheduling.wise.domain.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -17,9 +16,6 @@ public class ConsultationRequest {
     Long nurseId;
     Status status;
     List<Long> diagnostics;
-    ZonedDateTime scheduledAt;
-    ZonedDateTime createdAt;
-    ZonedDateTime updatedAt;
-    ZonedDateTime completedAt;
-
+    String scheduledAt;
+    String completedAt;
 }

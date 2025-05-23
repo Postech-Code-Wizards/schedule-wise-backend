@@ -6,12 +6,12 @@ input ConsultationInput {
     scheduledAt: String!
 }
 
-input ConsultationUpdateInput {
-    doctorId: ID!
-    nurseId: ID!
-    status: Status
-    scheduledAt: String!
-    completedAt: String
+input ConsultationUpdateCompletion {
+    completedAt: String!
+}
+
+input ConsultationUpdateStatus {
+    status: Status!
 }
 
 input DiagnosticInput {

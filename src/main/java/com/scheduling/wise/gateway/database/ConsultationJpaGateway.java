@@ -3,14 +3,14 @@ package com.scheduling.wise.gateway.database;
 import com.scheduling.wise.controller.exceptions.ConsultationNotFoundException;
 import com.scheduling.wise.converter.ConsultationConverter;
 import com.scheduling.wise.domain.Consultation;
-import com.scheduling.wise.domain.Diagnostic;
 import com.scheduling.wise.gateway.ConsultationGateway;
 import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
-import com.scheduling.wise.gateway.database.entities.proceduresdtos.ConsultationSummaryDTO;
+import com.scheduling.wise.gateway.database.entities.DiagnosticEntity;
 import com.scheduling.wise.gateway.database.repositories.ConsultationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
@@ -26,9 +26,11 @@ public class ConsultationJpaGateway implements ConsultationGateway {
     }
 
     @Override
-    public List<Consultation> getAllById(Long id) {
-        List<ConsultationSummaryDTO> consultationEntities = consultationRepository.getFutureConsultations(id);
-        return converter.toDomain(consultationEntities);
+    public List<Consultation> getAllFutureConsultationsById(Long patientId) {
+        List<ConsultationEntity> patientConsultations = consultationRepository.findConsultationByPatientId(patientId);
+        List<ConsultationEntity> futureConsultations = patientConsultations.stream().filter(consultation
+                -> consultation.getScheduledAt().isAfter(ZonedDateTime.now())).toList();
+        return converter.toDomain(futureConsultations);
     }
 
     @Override
@@ -40,28 +42,18 @@ public class ConsultationJpaGateway implements ConsultationGateway {
 
     @Override
     public void updateCompletion(Long id, Consultation consultation) {
-        ConsultationEntity newConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
-        ConsultationEntity consultationEntity = converter.toEntity(consultation);
+        ConsultationEntity oldConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
 
-        consultationEntity.setCompletedAt(newConsultation.getCompletedAt());
-        consultationRepository.save(consultationEntity);
+        oldConsultation.setCompletedAt(consultation.getCompletedAt());
+        consultationRepository.save(oldConsultation);
     }
 
     @Override
     public void updateStatus(Long id, Consultation consultation) {
-        ConsultationEntity consultationEntity = converter.toEntity(consultation);
+        ConsultationEntity oldConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
 
-        consultationEntity.setStatus(consultationEntity.getStatus());
-        consultationRepository.save(consultationEntity);
-    }
-
-    @Override
-    public void updateDiagnostics(Long id, Consultation consultation, Diagnostic diagnostic) {
-        ConsultationEntity newConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
-        ConsultationEntity consultationEntity = converter.toEntity(consultation);
-
-        consultationEntity.setDiagnostics(newConsultation.getDiagnostics());
-        consultationRepository.save(consultationEntity);
+        oldConsultation.setStatus(consultation.getStatus());
+        consultationRepository.save(oldConsultation);
     }
 
     @Override

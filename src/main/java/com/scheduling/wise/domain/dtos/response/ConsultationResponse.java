@@ -20,9 +20,9 @@ public class ConsultationResponse {
     Nurse nurse;
     Status status;
     List<Diagnostic> diagnostics;
-    ZonedDateTime scheduledAt;
-    ZonedDateTime createdAt;
-    ZonedDateTime updatedAt;
-    ZonedDateTime completedAt;
+    String scheduledAt;
+    String createdAt;
+    String updatedAt;
+    String completedAt;
 
 }

@@ -3,11 +3,10 @@ package com.scheduling.wise.converter;
 import com.scheduling.wise.domain.*;
 import com.scheduling.wise.domain.dtos.request.ConsultationRequest;
 import com.scheduling.wise.domain.dtos.response.ConsultationResponse;
-import com.scheduling.wise.domain.enums.Status;
 import com.scheduling.wise.gateway.database.entities.*;
-import com.scheduling.wise.gateway.database.entities.proceduresdtos.ConsultationSummaryDTO;
 import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ public class ConsultationConverter {
         if (request == null) return null;
 
         List<Diagnostic> diagnostics = request.getDiagnostics() != null
-                ? request.getDiagnostics().stream().map(Diagnostic::new).toList()
+                ? request.getDiagnostics().stream().map(Diagnostic::new).collect(Collectors.toList())
                 : null;
 
         return new Consultation(
@@ -28,10 +27,10 @@ public class ConsultationConverter {
                 new Nurse(request.getNurseId()),
                 request.getStatus(),
                 diagnostics,
-                request.getScheduledAt(),
-                request.getCreatedAt(),
-                request.getUpdatedAt(),
-                request.getCompletedAt()
+                request.getScheduledAt() != null ? ZonedDateTime.parse(request.getScheduledAt()) : null,
+                request.getCompletedAt() != null ? ZonedDateTime.parse(request.getCompletedAt()) : null,
+                null,
+                null
         );
     }
 
@@ -45,10 +44,10 @@ public class ConsultationConverter {
                 consultation.getNurse(),
                 consultation.getStatus(),
                 consultation.getDiagnostics(),
-                consultation.getScheduledAt(),
-                consultation.getCreatedAt(),
-                consultation.getUpdatedAt(),
-                consultation.getCompletedAt()
+                String.valueOf(consultation.getScheduledAt()),
+                String.valueOf(consultation.getCompletedAt()),
+                String.valueOf(consultation.getCreatedAt()),
+                String.valueOf(consultation.getUpdatedAt())
         );
     }
 
@@ -69,9 +68,9 @@ public class ConsultationConverter {
                 entity.getStatus(),
                 diagnostics,
                 entity.getScheduledAt(),
+                entity.getCompletedAt(),
                 entity.getCreatedAt(),
-                entity.getUpdatedAt(),
-                entity.getCompletedAt()
+                entity.getUpdatedAt()
         );
     }
 
@@ -118,24 +117,7 @@ public class ConsultationConverter {
         return entity;
     }
 
-    public Consultation toDomain(ConsultationSummaryDTO dto) {
-        if (dto == null) return null;
-
-        return new Consultation(
-                dto.getConsultationId(),
-                new Patient(dto.getPatientId()),
-                new Doctor(dto.getDoctorId()),
-                new Nurse(dto.getNurseId()),
-                Status.valueOf(dto.getStatus()),
-                null,
-                dto.getScheduledAt(),
-                dto.getCreatedAt(),
-                dto.getUpdatedAt(),
-                dto.getCompletedAt()
-        );
-    }
-
-    public List<Consultation> toDomain(List<ConsultationSummaryDTO> dtoList) {
+    public List<Consultation> toDomain(List<ConsultationEntity> dtoList) {
         if (dtoList == null) return null;
         return dtoList.stream()
                 .map(this::toDomain)

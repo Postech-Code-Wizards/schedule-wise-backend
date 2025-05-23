@@ -9,10 +9,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class GetAllConsultationUseCase {
+public class GetAllFutureConsultationsConsultationUseCase {
     private final ConsultationGateway consultationGateway;
 
     public List<Consultation> execute(Long id) {
-        return consultationGateway.getAllById(id);
+        return consultationGateway.getAllFutureConsultationsById(id);
     }
 }

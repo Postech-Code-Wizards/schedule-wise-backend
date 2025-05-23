@@ -1,4 +1,4 @@
-type Consultation {
+type ConsultationResponse {
     id: ID!
     patient: Patient
     doctor: Doctor
@@ -12,7 +12,7 @@ type Consultation {
 
 type DiagnosticsResponse {
     id: ID!
-    consultation: Consultation
+    consultation: ConsultationResponse
     patient: Patient
     doctor: Doctor
     createdAt: String

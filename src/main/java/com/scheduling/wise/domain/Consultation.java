@@ -21,9 +21,9 @@ public class Consultation {
     private Status status;
     private List<Diagnostic> diagnostics;
     private ZonedDateTime scheduledAt;
+    private ZonedDateTime completedAt;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
-    private ZonedDateTime completedAt;
 
     public Consultation(Long id) {
         this.id = id;

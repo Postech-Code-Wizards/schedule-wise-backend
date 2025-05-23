@@ -18,7 +18,7 @@ import java.util.List;
 public class ConsultationResolver {
     private final CreateConsultationUseCase createConsultationUseCase;
     private final GetConsultationUseCase getConsultationUseCase;
-    private final GetAllConsultationUseCase getAllConsultationUseCase;
+    private final GetAllFutureConsultationsConsultationUseCase getAllFutureConsultationsConsultationUseCase;
     private final UpdateConsultationCompletionUseCase updateConsultationCompletionUseCase;
     private final UpdateConsultationStatusUseCase updateConsultationStatusUseCase;
     private final DeleteConsultationUseCase deleteConsultationUseCase;
@@ -37,8 +37,8 @@ public class ConsultationResolver {
     }
 
     @QueryMapping
-    public List<ConsultationResponse> getConsultations(@Argument("id") Long id) {
-        var domain = getAllConsultationUseCase.execute(id);
+    public List<ConsultationResponse> getFutureConsultationsByCustomerId(@Argument("id") Long id) {
+        var domain = getAllFutureConsultationsConsultationUseCase.execute(id);
         return consultationConverter.toResponse(domain);
     }
 
