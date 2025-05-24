@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PreviousConsultationsRequest {
-    private Long id;
     private Long consultationId;
     private Long patientId;
     private Long doctorId;
@@ -21,7 +20,7 @@ public class PreviousConsultationsRequest {
     private ZonedDateTime scheduleAt;
     private ZonedDateTime completedAt;
     private Status status;
-    private Long diagnosticsId;
-    private Long symptomsId;
-    private Long prescriptionsDetailsId;
+    private Long diagnostics;
+    private Long symptoms;
+    private Long prescriptionsDetails;
 }

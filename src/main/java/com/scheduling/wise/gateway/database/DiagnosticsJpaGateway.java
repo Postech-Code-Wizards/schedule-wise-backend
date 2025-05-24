@@ -86,4 +86,9 @@ public class DiagnosticsJpaGateway implements DiagnosticGateway {
 
         diagnosticsRepository.deleteById(id);
     }
+
+    @Override
+    public List<Diagnostic> getByConsultationId(Long consultationId) {
+        return converter.toDomain(diagnosticsRepository.findAllByConsultationId(consultationId));
+    }
 }

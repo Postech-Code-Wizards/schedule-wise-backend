@@ -5,7 +5,6 @@ import com.scheduling.wise.converter.ConsultationConverter;
 import com.scheduling.wise.domain.Consultation;
 import com.scheduling.wise.gateway.ConsultationGateway;
 import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
-import com.scheduling.wise.gateway.database.entities.DiagnosticEntity;
 import com.scheduling.wise.gateway.database.repositories.ConsultationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -41,11 +40,12 @@ public class ConsultationJpaGateway implements ConsultationGateway {
     }
 
     @Override
-    public void updateCompletion(Long id, Consultation consultation) {
+    public Consultation updateCompletion(Long id, Consultation consultation) {
         ConsultationEntity oldConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
 
+        oldConsultation.setStatus(consultation.getStatus());
         oldConsultation.setCompletedAt(consultation.getCompletedAt());
-        consultationRepository.save(oldConsultation);
+        return converter.toDomain(consultationRepository.save(oldConsultation));
     }
 
     @Override
