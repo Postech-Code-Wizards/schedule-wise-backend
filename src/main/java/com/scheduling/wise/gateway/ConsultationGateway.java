@@ -11,7 +11,7 @@ public interface ConsultationGateway {
 
     Consultation getById(Long id);
 
-    void updateCompletion(Long id, Consultation consultation);
+    Consultation updateCompletion(Long id, Consultation consultation);
 
     void updateStatus(Long id, Consultation consultation);
 
