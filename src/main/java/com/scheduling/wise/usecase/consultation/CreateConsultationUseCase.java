@@ -21,10 +21,9 @@ public class CreateConsultationUseCase {
 
     public void execute(Consultation consultation) {
         consultation.setStatus(Status.SCHEDULED);
-        consultationGateway.save(consultation);
+        var consultationSaved = consultationGateway.save(consultation);
 
-        getPatientUseCase.execute(consultation.getPatient().getId());
-        sendNotification(consultation);
+        sendNotification(consultationSaved);
     }
 
     private void sendNotification(Consultation consultation) {

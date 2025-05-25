@@ -5,7 +5,7 @@ import com.scheduling.wise.domain.Consultation;
 import java.util.List;
 
 public interface ConsultationGateway {
-    void save(Consultation consultation);
+    Consultation save(Consultation consultation);
 
     List<Consultation> getAllFutureConsultationsById(Long id);
 

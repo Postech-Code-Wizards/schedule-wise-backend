@@ -19,9 +19,9 @@ public class ConsultationJpaGateway implements ConsultationGateway {
     private final ConsultationConverter converter;
 
     @Override
-    public void save(Consultation consultation) {
+    public Consultation save(Consultation consultation) {
         var consultationEntity = converter.toEntity(consultation);
-        consultationRepository.save(consultationEntity);
+        return converter.toDomain(consultationRepository.save(consultationEntity));
     }
 
     @Override
