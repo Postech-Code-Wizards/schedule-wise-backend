@@ -31,7 +31,7 @@ public class CreateConsultationUseCase {
                 .templateName("CONSULTATION_CREATED")
                 .deliveryMethod(DeliveryMethod.WHATSAPP)
                 .patientId(consultation.getPatient().getId())
-                .recipient(consultation.getPatient().getUser().getEmail()).build();
+                .recipient("email@test.com").build();
 
         notificationProducerService.sendNotification(message);
     }
