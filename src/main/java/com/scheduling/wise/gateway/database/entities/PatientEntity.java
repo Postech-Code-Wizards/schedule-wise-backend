@@ -25,8 +25,9 @@ public class PatientEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @Column(name = "has_allergies", nullable = false)
     private Boolean hasAllergies = false;
@@ -42,11 +43,13 @@ public class PatientEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
-    private EmergencyContactEntity emergencyContactEntity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "emergency_contact_id", nullable = false)
+    private EmergencyContactEntity emergencyContact;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<PhoneEntity> phones;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phone_id", nullable = false)
+    private PhoneEntity phone;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<ConsultationEntity> consultations;
@@ -54,4 +57,3 @@ public class PatientEntity {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<DiagnosticEntity> diagnostics;
 }
-

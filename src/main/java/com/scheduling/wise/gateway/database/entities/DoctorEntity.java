@@ -27,8 +27,9 @@ public class DoctorEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "specialty", nullable = false)
@@ -46,8 +47,9 @@ public class DoctorEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<PhoneEntity> phones;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "phone_id", referencedColumnName = "id", nullable = false)
+    private PhoneEntity phone;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<ConsultationEntity> consultation;

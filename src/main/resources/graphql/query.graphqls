@@ -1,0 +1,39 @@
+type Query {
+    getConsultationById(id: ID!): ConsultationResponse
+    getFutureConsultationsByCustomerId(id: ID!): [ConsultationResponse]
+
+    getDiagnosticById(id: ID!): DiagnosticSymptomPrescriptionResponse
+    getDiagnosticsByConsultationId(id: ID!): [DiagnosticsResponse]
+
+    getDoctorById(id: ID!): Doctor
+    getDoctors: [Doctor]
+
+    getNurseById(id: ID!): Nurse
+    getNurses: [Nurse]
+
+    getPatientById(id: ID!): Patient
+    getPatients: [Patient]
+}
+
+type Mutation {
+    createConsultation(input: ConsultationInput!): Boolean
+    updateConsultationCompletion(id: ID!, input: ConsultationUpdateCompletion!): Boolean
+    updateConsultationStatus(id: ID!, input: ConsultationUpdateStatus!): Boolean
+    deleteConsultation(id: ID!): Boolean
+
+    createDiagnostic(input: CreateDiagnosticInput!): Boolean
+    updateDiagnostic(id:ID!, input: UpdateDiagnosticInput!): Boolean
+    deleteDiagnostic(id: ID!): Boolean
+
+    createDoctor(input: DoctorInput!, userInput: UserInput!, phoneInput: PhoneInput!): Boolean
+    updateDoctor(id: ID!, input: DoctorUpdateInput!, userInput: UserInput!): Boolean
+    deleteDoctor(id: ID!): Boolean
+
+    createPatient(input: PatientInput!, userInput: UserInput!, emergencyContactInput: EmergencyContactInput!, phoneInput: PhoneInput!, emergencyContactPhone: EmergencyContactPhoneInput!): Boolean
+    updatePatient(id: ID!, input: PatientUpdateInput!, userInput: UserInput!, emergencyContactInput: EmergencyContactInput!): Boolean
+    deletePatient(id: ID!): Boolean
+
+    createNurse(input: NurseInput!, userInput: UserInput!, phoneInput: PhoneInput!): Boolean
+    updateNurse(id: ID!, input: NurseUpdateInput!, userInput: UserInput!): Boolean
+    deleteNurse(id: ID!): Boolean
+}

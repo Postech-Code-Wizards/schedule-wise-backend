@@ -1,0 +1,146 @@
+input ConsultationInput {
+    patientId: ID!
+    doctorId: ID!
+    nurseId: ID!
+    status: Status!
+    scheduledAt: String!
+}
+
+input ConsultationUpdateCompletion {
+    status: Status!
+    completedAt: String!
+}
+
+input ConsultationUpdateStatus {
+    status: Status!
+}
+
+input DiagnosticInput {
+    consultationId: ID!
+    patientId: ID!
+    doctorId: ID!
+}
+
+input DiagnosticUpdateInput {
+    patientId: ID!
+    doctorId: ID!
+    symptomId: ID
+    prescriptionDetails: PrescriptionDetailsInput!
+}
+
+input PrescriptionDetailsInput {
+    medicationName: String!
+    dosage: String!
+    frequency: String!
+    routeOfAdministration: String!
+    instructions: String
+    followUpDate: String
+}
+
+input PrescriptionDetailsUpdateInput {
+    medicationName: String
+    diagnostic: ID
+    dosage: String
+    frequency: String
+    routeOfAdministration: String
+    instructions: String!
+    followUpDate: String
+}
+
+input DoctorInput {
+    specialty: Specialty!
+    crm: String!
+}
+
+input DoctorUpdateInput {
+    user: ID!
+    phone: ID!
+    email: String
+    specialty: Specialty
+    crm: String
+}
+
+input PatientInput {
+    dateOfBirth: String!
+}
+
+input PatientUpdateInput {
+    user: ID
+    emergencyContact: ID
+    phone: ID
+    dateOfBirth: String
+}
+
+input NurseInput {
+    areaOfWork: AreaOfWork!
+}
+
+input NurseUpdateInput {
+    user: ID
+    phone: ID
+    areaOfWork: AreaOfWork
+}
+
+input EmergencyContactInput {
+    contactName: String!
+    relationshipType: RelationshipType!
+}
+
+input EmergencyContactUpdateInput {
+    patient: ID
+    contactName: String
+    phone: PhoneInput
+    relationshipType: RelationshipType
+}
+
+input PhoneInput {
+    areaCode: String!
+    phoneNumber: String!
+    phoneType: PhoneType!
+    operator: String!
+}
+
+input EmergencyContactPhoneInput {
+    areaCode: String!
+    phoneNumber: String!
+    phoneType: PhoneType!
+    operator: String!
+}
+
+input PhoneUpdateInput {
+    areaCode: String
+    phoneNumber: String
+    phoneType: PhoneType
+    operator: String
+}
+
+input SymptomInput {
+    name: String!
+}
+
+input SymptomUpdateInput {
+    name: String!
+}
+
+input CreateDiagnosticInput {
+    diagnostic: DiagnosticInput!
+    symptomInput: [SymptomInput!]!
+    prescriptionDetails: [PrescriptionDetailsInput!]!
+}
+
+input UpdateDiagnosticInput {
+    diagnostic: DiagnosticInput!
+    symptomInput: [SymptomInput!]!
+    prescriptionDetails: [PrescriptionDetailsInput!]!
+}
+
+input UserInput {
+    email: String!
+    password: String!
+    userType: UserType!
+}
+
+input UserUpdateInput {
+    email: String
+    password: String
+}
