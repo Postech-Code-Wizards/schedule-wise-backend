@@ -1,20 +1,14 @@
+# Etapa 1: build
 FROM maven:3.9.9-amazoncorretto-21-alpine AS build
 
 WORKDIR /app
 
-COPY ../pom.xml ./
-COPY ../src ./src
-COPY mvnw .
-COPY .mvn .mvn
+COPY . .
 
 RUN chmod +x ./mvnw
-RUN ./mvnw dependency:go-offline -B
+RUN ./mvnw clean package -DskipTests
 
-RUN mvn clean package -DskipTests
-
-RUN ./mvnw package -DskipTests
-
-# Etapa 2: execução com JDK leve
+# Etapa 2: execução
 FROM amazoncorretto:21.0.5-al2023-headless
 
 WORKDIR /app
