@@ -3,10 +3,14 @@ package com.scheduling.wise.domain;
 import com.scheduling.wise.domain.enums.AreaOfWork;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Nurse {
     private Long id;
@@ -15,4 +19,8 @@ public class Nurse {
     private AreaOfWork areaOfWork;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+
+    public Nurse(Long id) {
+        this.id = id;
+    }
 }

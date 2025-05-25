@@ -25,10 +25,6 @@ public class EmergencyContactEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "patient_id", nullable = false)
-    private PatientEntity patient;
-
     @Column(name = "contact_name", nullable = false)
     private String contactName;
 
@@ -40,9 +36,9 @@ public class EmergencyContactEntity {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    @OneToOne
-    @JoinColumn(name = "contact_phone_id")
-    private PhoneEntity contactPhone;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phone_id", nullable = false)
+    private PhoneEntity phone;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "relationship_type", nullable = false)

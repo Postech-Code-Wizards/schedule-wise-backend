@@ -34,6 +34,6 @@ public class SymptomEntity {
     private ZonedDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "diagnostic_id")
+    @JoinColumn(name = "diagnostic_id", nullable = false)
     private DiagnosticEntity diagnostic;
 }

@@ -46,16 +46,4 @@ public class PhoneEntity {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private ZonedDateTime createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private PatientEntity patient;
-
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private DoctorEntity doctor;
-
-    @ManyToOne
-    @JoinColumn(name = "nurse_id")
-    private NurseEntity nurse;
 }

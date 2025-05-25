@@ -34,7 +34,7 @@ public class ConsultationEntity {
     @JoinColumn(name = "doctor_id")
     private DoctorEntity doctor;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "nurse_id")
     private NurseEntity nurse;
 
