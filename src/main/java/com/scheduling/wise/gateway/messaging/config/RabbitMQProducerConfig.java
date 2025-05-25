@@ -14,18 +14,8 @@ import static com.scheduling.wise.gateway.messaging.constants.QueueConstants.*;
 public class RabbitMQProducerConfig {
 
     @Bean
-    public Queue emailQueue() {
-        return new Queue(NOTIFICATION_EMAIL_QUEUE, true);
-    }
-
-    @Bean
-    public Queue smsQueue() {
-        return new Queue(NOTIFICATION_SMS_QUEUE, true);
-    }
-
-    @Bean
-    public Queue whatsappQueue() {
-        return new Queue(NOTIFICATION_WHATSAPP_QUEUE, true);
+    public Queue notificationQueue() {
+        return new Queue(NOTIFICATION_QUEUE, true);
     }
 
     @Bean

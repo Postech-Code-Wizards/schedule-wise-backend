@@ -5,12 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Builder
 @Getter
 @AllArgsConstructor
-public class StreamMessage {
-    private String notificationId;
+public class NotificationRequest {
+    private String templateName;
     private DeliveryMethod deliveryMethod;
+    private Long patientId;
     private String recipient;
-    private String message;
+    private List<KeyValueRequest> additionalInfo;
 }
