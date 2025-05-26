@@ -1,5 +1,6 @@
 type Query {
     getConsultationById(id: ID!): ConsultationResponse
+    getAllConsultationsByCustomerId(id: ID!): [ConsultationResponse]
     getFutureConsultationsByCustomerId(id: ID!): [ConsultationResponse]
 
     getDiagnosticById(id: ID!): DiagnosticSymptomPrescriptionResponse

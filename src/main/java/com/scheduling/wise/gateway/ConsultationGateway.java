@@ -9,6 +9,8 @@ public interface ConsultationGateway {
 
     List<Consultation> getAllFutureConsultationsById(Long id);
 
+    List<Consultation> getAllConsultationsByPatientId(Long id);
+
     Consultation getById(Long id);
 
     Consultation updateCompletion(Long id, Consultation consultation);

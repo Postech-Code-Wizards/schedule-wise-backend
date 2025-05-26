@@ -33,6 +33,11 @@ public class ConsultationJpaGateway implements ConsultationGateway {
     }
 
     @Override
+    public List<Consultation> getAllConsultationsByPatientId(Long patientId) {
+        return converter.toDomain(consultationRepository.findConsultationByPatientId(patientId));
+    }
+
+    @Override
     public Consultation getById(Long id) {
         ConsultationEntity consultationEntity = consultationRepository.findById(id)
                 .orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));

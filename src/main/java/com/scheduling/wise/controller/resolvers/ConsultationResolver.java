@@ -19,6 +19,7 @@ public class ConsultationResolver {
     private final CreateConsultationUseCase createConsultationUseCase;
     private final GetConsultationUseCase getConsultationUseCase;
     private final GetAllFutureConsultationsConsultationUseCase getAllFutureConsultationsConsultationUseCase;
+    private final GetAllConsultationsConsultationUseCase getAllConsultationsConsultationUseCase;
     private final UpdateConsultationCompletionUseCase updateConsultationCompletionUseCase;
     private final UpdateConsultationStatusUseCase updateConsultationStatusUseCase;
     private final DeleteConsultationUseCase deleteConsultationUseCase;
@@ -33,6 +34,12 @@ public class ConsultationResolver {
     @QueryMapping
     public ConsultationResponse getConsultationById(@Argument("id") Long id) {
         var domain = getConsultationUseCase.execute(id);
+        return consultationConverter.toResponse(domain);
+    }
+
+    @QueryMapping
+    public List<ConsultationResponse> getAllConsultationsByCustomerId(@Argument("id") Long id) {
+        var domain = getAllConsultationsConsultationUseCase.execute(id);
         return consultationConverter.toResponse(domain);
     }
 
