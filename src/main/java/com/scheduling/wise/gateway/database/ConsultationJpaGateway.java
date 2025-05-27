@@ -1,8 +1,10 @@
 package com.scheduling.wise.gateway.database;
 
+import com.scheduling.wise.config.graphql.exceptions.CustomExceptionHandler;
 import com.scheduling.wise.controller.exceptions.ConsultationNotFoundException;
 import com.scheduling.wise.converter.ConsultationConverter;
 import com.scheduling.wise.domain.Consultation;
+import com.scheduling.wise.domain.enums.Status;
 import com.scheduling.wise.gateway.ConsultationGateway;
 import com.scheduling.wise.gateway.database.entities.ConsultationEntity;
 import com.scheduling.wise.gateway.database.repositories.ConsultationRepository;
@@ -46,10 +48,12 @@ public class ConsultationJpaGateway implements ConsultationGateway {
 
     @Override
     public Consultation updateCompletion(Long id, Consultation consultation) {
-        ConsultationEntity oldConsultation = consultationRepository.findById(id).orElseThrow(() -> new ConsultationNotFoundException("Consultation not found for id " + id));
-
-        oldConsultation.setStatus(consultation.getStatus());
+        ConsultationEntity oldConsultation = consultationRepository.findById(id).orElseThrow(() -> new CustomExceptionHandler("error.not_found", "Consultation not found for id " + id));
+        if (oldConsultation.getStatus() == Status.ACCOMPLISHED) {
+            throw new CustomExceptionHandler("error.already_exists", id);
+        }
         oldConsultation.setCompletedAt(consultation.getCompletedAt());
+        oldConsultation.setStatus(consultation.getStatus());
         return converter.toDomain(consultationRepository.save(oldConsultation));
     }
 
